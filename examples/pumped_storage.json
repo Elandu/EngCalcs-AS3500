@@ -1,0 +1,7 @@
+{
+  "catchment_area_m2": 1000,
+  "weighted_runoff_coefficient": 0.9,
+  "rainfall_10pct_120min_mm_per_hour": 44.4,
+  "pump_capacity_lps": 30,
+  "available_wet_well_storage_m3": 26
+}

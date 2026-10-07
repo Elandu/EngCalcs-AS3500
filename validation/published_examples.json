@@ -1,0 +1,26 @@
+{
+  "standard": "AS/NZS 3500.3:2025",
+  "examples": [
+    {
+      "name": "Appendix K pumped system",
+      "source_basis": "Published numerical example in Appendix K; recorded separately from independent equation benchmarks.",
+      "inputs": {
+        "catchment_area_m2": 1000,
+        "weighted_runoff_coefficient": 0.9,
+        "rainfall_10pct_120min_mm_per_hour": 44.4,
+        "pump_capacity_lps": 30
+      },
+      "published_rounded_values": {
+        "storm_runoff_volume_m3": 80,
+        "pump_volume_in_30_min_m3": 54,
+        "wet_well_storage_m3": 26
+      },
+      "unrounded_equation_values": {
+        "storm_runoff_volume_m3": 79.92,
+        "pump_volume_in_30_min_m3": 54,
+        "required_wet_well_storage_m3": 25.92
+      },
+      "finding": "Matches the published example when its rounded storage value is compared at the stated precision."
+    }
+  ]
+}

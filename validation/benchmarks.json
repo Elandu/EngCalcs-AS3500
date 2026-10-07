@@ -1,0 +1,62 @@
+{
+  "package_version": "0.1.0",
+  "standard": "AS/NZS 3500.3:2025",
+  "method": "Independent arithmetic expressions compared with calculation outputs. The published Appendix K example is recorded separately.",
+  "passed": true,
+  "cases": [
+    {
+      "name": "Single-slope eaves roof catchment",
+      "source_basis": "Independent trigonometric evaluation of the stated area-factor equation.",
+      "actual": 128.86751345948127,
+      "expected": 128.86751345948127,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Steel roof design flow",
+      "source_basis": "0.9 x area x intensity / 3600, with L/s and SI input units.",
+      "actual": 45.0,
+      "expected": 45.0,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Pervious runoff coefficient",
+      "source_basis": "1.0 x (0.0133 x 44.4 - 0.233), with no soil adjustment.",
+      "actual": 0.35751999999999995,
+      "expected": 0.35751999999999995,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Mixed surface design flow",
+      "source_basis": "Sum of area-weighted coefficients multiplied by intensity / 3600.",
+      "actual": 52.437999999999995,
+      "expected": 52.437999999999995,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Rectangular Manning channel capacity",
+      "source_basis": "Rectangular area and wetted perimeter evaluated independently in SI units.",
+      "actual": 61.56161488540494,
+      "expected": 61.56161488540494,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Sag-pit inlet capacity",
+      "source_basis": "1600 x blockage factor x free perimeter x ponding depth to power 1.5.",
+      "actual": 101.19288512538816,
+      "expected": 101.19288512538816,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    }
+  ]
+}

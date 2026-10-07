@@ -1,0 +1,30 @@
+"""Standard edition metadata and reviewed values used by this module."""
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class StandardReference:
+    code: str = "AS/NZS 3500.3"
+    edition: str = "2025"
+    title: str = "Plumbing and drainage - Part 3: Stormwater drainage"
+
+    def descriptor(self) -> dict[str, str]:
+        return {
+            "code": self.code,
+            "edition": self.edition,
+            "title": self.title,
+            "amendments": "None included in the cited edition.",
+        }
+
+
+STANDARD = StandardReference()
+
+# AS/NZS 3500.3:2025 Clause 5.4.6, Australian roofed-surface choices.
+ROOF_RUNOFF_COEFFICIENTS = {
+    "steel_non_absorbent": 0.9,
+    "near_flat_slightly_absorbent": 0.8,
+}
+
+# AS/NZS 3500.3:2025 Table 5.4.6(A), runoff-coefficient multipliers m.
+PERVIOUS_RUNOFF_MULTIPLIERS = (0.8, 0.85, 0.95, 1.0, 1.05, 1.15, 1.2, 1.25)

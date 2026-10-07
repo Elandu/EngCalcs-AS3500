@@ -1,0 +1,5 @@
+{
+  "catchment_area_m2": 1000,
+  "design_rainfall_intensity_mm_per_hour": 180,
+  "roof_surface": "steel_non_absorbent"
+}

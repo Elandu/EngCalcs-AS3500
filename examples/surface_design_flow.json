@@ -1,0 +1,17 @@
+{
+  "design_rainfall_intensity_mm_per_hour": 180,
+  "catchments": [
+    {
+      "area_m2": 400,
+      "runoff_coefficient": 0.9
+    },
+    {
+      "area_m2": 600,
+      "runoff_coefficient": 0.85
+    },
+    {
+      "area_m2": 500,
+      "runoff_coefficient": 0.35752
+    }
+  ]
+}

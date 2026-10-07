@@ -1,0 +1,7 @@
+{
+  "shape": "rectangular",
+  "bottom_width_m": 0.3,
+  "flow_depth_m": 0.15,
+  "channel_gradient": 0.01,
+  "manning_n": 0.013
+}
