@@ -1,9 +1,18 @@
 {
-  "package_version": "0.1.0",
+  "package_version": "0.2.0",
   "standard": "AS/NZS 3500.3:2025",
   "method": "Independent arithmetic expressions compared with calculation outputs. The published Appendix K example is recorded separately.",
   "passed": true,
   "cases": [
+    {
+      "name": "Flat roof catchment area",
+      "source_basis": "Clause 3.4.3.1 plan area, including any contributing gutters.",
+      "actual": 240.0,
+      "expected": 240,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
     {
       "name": "Single-slope eaves roof catchment",
       "source_basis": "Independent trigonometric evaluation of the stated area-factor equation.",
@@ -14,10 +23,10 @@
       "passed": true
     },
     {
-      "name": "Steel roof design flow",
-      "source_basis": "0.9 x area x intensity / 3600, with L/s and SI input units.",
-      "actual": 45.0,
-      "expected": 45.0,
+      "name": "Australian roofed-area design flow",
+      "source_basis": "Clause 5.4.6 coefficient 1.0 x area x intensity / 3600.",
+      "actual": 50.0,
+      "expected": 50.0,
       "absolute_tolerance": 1e-09,
       "absolute_difference": 0.0,
       "passed": true
@@ -32,10 +41,28 @@
       "passed": true
     },
     {
-      "name": "Mixed surface design flow",
-      "source_basis": "Sum of area-weighted coefficients multiplied by intensity / 3600.",
-      "actual": 52.437999999999995,
-      "expected": 52.437999999999995,
+      "name": "Pervious runoff coefficient with clay adjustment",
+      "source_basis": "Table 5.4.6(A) multiplier 0.85, then add 0.1 for clay soil.",
+      "actual": 0.4038919999999999,
+      "expected": 0.4038919999999999,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Pervious runoff coefficient with sandy-soil adjustment",
+      "source_basis": "Table 5.4.6(A) multiplier 1.05, then subtract 0.1 with a 0.1 floor.",
+      "actual": 0.275396,
+      "expected": 0.275396,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Roof, impervious, and pervious surface design flow",
+      "source_basis": "Clause 5.4.8 area-weighted sum using Australian coefficients 1.0 and 0.9 and Cp.",
+      "actual": 55.937999999999995,
+      "expected": 55.937999999999995,
       "absolute_tolerance": 1e-09,
       "absolute_difference": 0.0,
       "passed": true
@@ -45,6 +72,15 @@
       "source_basis": "Rectangular area and wetted perimeter evaluated independently in SI units.",
       "actual": 61.56161488540494,
       "expected": 61.56161488540494,
+      "absolute_tolerance": 1e-09,
+      "absolute_difference": 0.0,
+      "passed": true
+    },
+    {
+      "name": "Trapezoidal Manning channel capacity",
+      "source_basis": "Trapezoid area and wetted perimeter evaluated independently, then Manning capacity.",
+      "actual": 229.86257807924218,
+      "expected": 229.86257807924218,
       "absolute_tolerance": 1e-09,
       "absolute_difference": 0.0,
       "passed": true

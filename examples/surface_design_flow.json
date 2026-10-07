@@ -3,11 +3,11 @@
   "catchments": [
     {
       "area_m2": 400,
-      "runoff_coefficient": 0.9
+      "runoff_coefficient": 1.0
     },
     {
       "area_m2": 600,
-      "runoff_coefficient": 0.85
+      "runoff_coefficient": 0.9
     },
     {
       "area_m2": 500,

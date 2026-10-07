@@ -20,11 +20,9 @@ class StandardReference:
 
 STANDARD = StandardReference()
 
-# AS/NZS 3500.3:2025 Clause 5.4.6, Australian roofed-surface choices.
-ROOF_RUNOFF_COEFFICIENTS = {
-    "steel_non_absorbent": 0.9,
-    "near_flat_slightly_absorbent": 0.8,
-}
+# AS/NZS 3500.3:2025 Clause 5.4.6(a), Australian runoff coefficients.
+AUSTRALIAN_ROOFED_AREA_RUNOFF_COEFFICIENT = 1.0
+AUSTRALIAN_UNROOFED_IMPERVIOUS_RUNOFF_COEFFICIENT = 0.9
 
 # AS/NZS 3500.3:2025 Table 5.4.6(A), runoff-coefficient multipliers m.
 PERVIOUS_RUNOFF_MULTIPLIERS = (0.8, 0.85, 0.95, 1.0, 1.05, 1.15, 1.2, 1.25)

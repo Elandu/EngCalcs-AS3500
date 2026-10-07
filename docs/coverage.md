@@ -9,7 +9,7 @@ The implemented basis is AS/NZS 3500.3:2025, Plumbing and drainage - Part 3: Sto
 | Calculation | Clause basis | Included scope |
 |---|---|---|
 | Roof catchment area | 3.4.3.1 and 3.4.3.2 | Freely exposed flat roofs and single-slope roofs draining to eaves gutters; the flat-roof plan area includes contributing gutters, and the single-slope factor is evaluated from roof angle. |
-| Roof design flow | 5.4.6 and 5.4.8 | Supplied design intensity and one of the listed Australian roof-surface coefficients. |
+| Roof design flow | 5.4.6 and 5.4.8 | Supplied design intensity and the Australian roofed-area coefficient, Cr = 1.0. |
 | Pervious runoff coefficient | 5.4.6 | Australian equation, intensity limits, one of the Table 5.4.6(A) multipliers, and sandy/clay soil adjustment. |
 | Surface design flow | 5.4.7 and 5.4.8 | Plan-area subcatchments with supplied coefficients and design rainfall intensity. |
 | Open-channel capacity | 5.4.9 | Rectangular or trapezoidal wetted section and user-selected Manning roughness. |
@@ -23,11 +23,13 @@ The implemented basis is AS/NZS 3500.3:2025, Plumbing and drainage - Part 3: Sto
 - Flow is in litres per second.
 - For a flat roof, the plan area includes any gutters. For a single-slope roof, enter the roof plan area used by Clause 3.4.3.2.
 - Roof slope is in degrees and is limited to 0 through 65 degrees. The supported roof-area equations require freely exposed roofs.
+- For Australian roofed areas, Clause 5.4.6(a)(i) specifies a runoff coefficient of 1.0. For unroofed impervious areas, Clause 5.4.6(a)(ii) specifies 0.9. The pervious coefficient is calculated separately.
 - Channel depth, perimeter, and hydraulic radius are in metres.
 - Manning roughness and channel gradient are dimensionless.
 - Pumped-system volumes are in cubic metres.
 - The pervious-area runoff-coefficient multiplier m must correspond to the selected AEP in Table 5.4.6(A). The accepted values are 0.8, 0.85, 0.95, 1.0, 1.05, 1.15, 1.2, and 1.25.
 - For the pumped-storage calculation, the rainfall intensity must be the 10% AEP, 120-minute intensity for the project location.
+- The pumped-storage calculation accepts a weighted runoff coefficient as an input and does not determine whether that coefficient is suitable for a particular catchment.
 
 The intensity and AEP values must be selected by the designer from the applicable rainfall source and standard method. The package does not calculate IFD values, time of concentration, or rainfall temporal patterns.
 

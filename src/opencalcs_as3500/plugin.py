@@ -69,7 +69,10 @@ def _calculations() -> tuple[Calculation, ...]:
         Calculation(
             "stormwater.as3500.roof_flow",
             "Roof design flow",
-            "Roof flow using a supplied design rainfall intensity and Clause 5.4.6 runoff factor.",
+            (
+                "Roof flow using supplied design rainfall intensity and the Australian Clause "
+                "5.4.6 roofed-area coefficient."
+            ),
             deepcopy(ROOF_FLOW_INPUT_SCHEMA),
             run_roof_flow,
         ),

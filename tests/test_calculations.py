@@ -50,8 +50,19 @@ def test_example_outputs_match_the_output_schema(filename, runner):
 def test_independent_numerical_benchmarks_match():
     report = build_report()
     assert report["passed"]
-    assert len(report["cases"]) == 6
+    assert len(report["cases"]) == 10
     assert all(case["passed"] for case in report["cases"])
+
+
+def test_roof_flow_uses_australian_roofed_area_coefficient():
+    result = run_roof_flow(example("roof_flow.json"))["results"]
+    assert result["runoff_coefficient"] == 1.0
+    assert result["design_flow_lps"] == pytest.approx(50.0)
+
+
+def test_roof_flow_rejects_non_australian_surface_selection():
+    with pytest.raises(ValueError, match="Additional properties are not allowed"):
+        run_roof_flow({**example("roof_flow.json"), "roof_surface": "steel_non_absorbent"})
 
 
 def test_flat_roof_catchment_equals_plan_area():
@@ -161,6 +172,21 @@ def test_pumped_storage_fails_when_available_wet_well_is_too_small():
         {**example("pumped_storage.json"), "available_wet_well_storage_m3": 9}
     )["results"]
     assert result["storage_requirement_satisfied"] is False
+
+
+def test_pumped_storage_minimum_wet_well_controls_when_residual_is_smaller():
+    inputs = {
+        "catchment_area_m2": 1000,
+        "weighted_runoff_coefficient": 0.9,
+        "rainfall_10pct_120min_mm_per_hour": 44.4,
+        "pump_capacity_lps": 40,
+    }
+    result = run_pumped_storage(inputs)["results"]
+    assert result["storm_runoff_volume_m3"] == pytest.approx(79.92)
+    assert result["pump_volume_in_30_min_m3"] == pytest.approx(72)
+    assert result["minimum_wet_well_storage_m3"] == pytest.approx(10)
+    assert result["required_wet_well_storage_m3"] == pytest.approx(10)
+    assert result["required_combined_effective_storage_m3"] == pytest.approx(82)
 
 
 def test_nested_non_finite_input_is_rejected():

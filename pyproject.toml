@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "opencalcs-as3500"
-version = "0.1.0"
+version = "0.2.0"
 description = "Selected AS/NZS 3500.3:2025 stormwater drainage calculations for OpenCalcs."
 readme = "README.md"
 requires-python = ">=3.12"

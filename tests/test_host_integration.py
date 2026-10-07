@@ -32,10 +32,23 @@ def test_entry_point_registers_calculations_and_registry_runs_examples():
     registry = CalculationRegistry()
     assert plugin.id == "stormwater.as3500"
     assert len(plugin.calculations) == 7
-    result = registry.run(
-        "stormwater.as3500.pumped_storage",
-        _inputs("pumped_storage.json"),
-    )
+    examples = {
+        "stormwater.as3500.roof_catchment": "roof_catchment.json",
+        "stormwater.as3500.roof_flow": "roof_flow.json",
+        "stormwater.as3500.pervious_runoff_coefficient": "pervious_runoff_coefficient.json",
+        "stormwater.as3500.design_flow": "surface_design_flow.json",
+        "stormwater.as3500.open_channel_capacity": "open_channel_capacity.json",
+        "stormwater.as3500.sag_pit_capacity": "sag_pit_capacity.json",
+        "stormwater.as3500.pumped_storage": "pumped_storage.json",
+    }
+    results = {
+        calculation_id: registry.run(calculation_id, _inputs(filename))
+        for calculation_id, filename in examples.items()
+    }
+    assert set(results) == {calculation.id for calculation in plugin.calculations}
+    assert results["stormwater.as3500.roof_flow"]["results"]["runoff_coefficient"] == 1.0
+    assert results["stormwater.as3500.roof_flow"]["results"]["design_flow_lps"] == pytest.approx(50)
+    result = results["stormwater.as3500.pumped_storage"]
     assert result["results"]["storm_runoff_volume_m3"] == pytest.approx(79.92)
     assert result["_provenance"]["engine"]["id"] == "stormwater.as3500"
     assert result["_provenance"]["standard"]["edition"] == "2025"
@@ -58,9 +71,18 @@ def test_host_http_catalog_and_calculation_run():
                 "/api/v1/calculations/stormwater.as3500.sag_pit_capacity/run",
                 json={"inputs": _inputs("sag_pit_capacity.json")},
             )
-        return descriptor, result
+            roof_descriptor = await client.get("/api/v1/calculations/stormwater.as3500.roof_flow")
+            roof_result = await client.post(
+                "/api/v1/calculations/stormwater.as3500.roof_flow/run",
+                json={"inputs": _inputs("roof_flow.json")},
+            )
+        return descriptor, result, roof_descriptor, roof_result
 
-    descriptor, result = asyncio.run(request_routes())
+    descriptor, result, roof_descriptor, roof_result = asyncio.run(request_routes())
     assert descriptor.status_code == 200
     assert result.status_code == 200
     assert result.json()["results"]["capacity_lps"] == pytest.approx(1600 * 0.5 * 4 * 0.1**1.5)
+    assert roof_descriptor.status_code == 200
+    assert roof_result.status_code == 200
+    assert roof_result.json()["results"]["runoff_coefficient"] == 1.0
+    assert roof_result.json()["results"]["design_flow_lps"] == pytest.approx(50)

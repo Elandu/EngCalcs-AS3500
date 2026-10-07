@@ -16,7 +16,7 @@ from opencalcs_as3500.schemas import (
     SAG_PIT_INPUT_SCHEMA,
 )
 from opencalcs_as3500.standards import (
-    ROOF_RUNOFF_COEFFICIENTS,
+    AUSTRALIAN_ROOFED_AREA_RUNOFF_COEFFICIENT,
     STANDARD,
 )
 
@@ -84,8 +84,7 @@ def run_roof_flow(inputs: Mapping[str, Any]) -> dict[str, Any]:
     """Calculate roof design flow using a supplied design rainfall intensity."""
 
     data = _validated(inputs, ROOF_FLOW_INPUT_SCHEMA)
-    surface = data["roof_surface"]
-    coefficient = ROOF_RUNOFF_COEFFICIENTS[surface]
+    coefficient = AUSTRALIAN_ROOFED_AREA_RUNOFF_COEFFICIENT
     area = float(data["catchment_area_m2"])
     intensity = float(data["design_rainfall_intensity_mm_per_hour"])
     flow = coefficient * area * intensity / 3600.0
@@ -95,7 +94,6 @@ def run_roof_flow(inputs: Mapping[str, Any]) -> dict[str, Any]:
         {
             "catchment_area_m2": area,
             "design_rainfall_intensity_mm_per_hour": intensity,
-            "roof_surface": surface,
             "runoff_coefficient": coefficient,
             "design_flow_lps": flow,
         },

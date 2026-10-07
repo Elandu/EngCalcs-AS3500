@@ -5,7 +5,7 @@ This package adds seven selected stormwater calculations from AS/NZS 3500.3:2025
 ## Included calculations
 
 - stormwater.as3500.roof_catchment - Freely exposed flat-roof or single-slope eaves-gutter area
-- stormwater.as3500.roof_flow - Roof design flow using supplied rainfall intensity
+- stormwater.as3500.roof_flow - Roof design flow using supplied intensity and the Australian roof coefficient (1.0)
 - stormwater.as3500.pervious_runoff_coefficient - Australian unroofed-pervious runoff coefficient
 - stormwater.as3500.design_flow - Combined surface design flow for weighted subcatchments
 - stormwater.as3500.open_channel_capacity - Rectangular or trapezoidal Manning capacity
@@ -17,6 +17,8 @@ See docs/coverage.md for the clause map, inputs, assumptions, and exclusions. Ca
 ## Inputs that must come from the project
 
 The package does not generate design rainfall. Supply intensity values selected for the location, AEP, duration, and method required by the standard. For pervious areas, also supply the applicable runoff-coefficient multiplier m from Table 5.4.6(A). The package does not infer a catchment time of concentration or select an AEP for the designer.
+
+For Australian roofed areas, Clause 5.4.6 specifies a runoff coefficient of 1.0; the roof-flow calculation applies it directly. Appendix K's pumped-system example supplies a coefficient of 0.9, which the storage calculation accepts as given to reproduce that example. The pumped-storage calculation does not select or validate a project coefficient.
 
 Manning roughness and the blockage factor are explicit design inputs. The default sag-pit blockage factor is 0.5, the common value identified by the standard. Confirm all project inputs, site conditions, and receiving-system constraints independently.
 

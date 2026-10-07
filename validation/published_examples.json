@@ -20,7 +20,8 @@
         "pump_volume_in_30_min_m3": 54,
         "required_wet_well_storage_m3": 25.92
       },
-      "finding": "Matches the published example when its rounded storage value is compared at the stated precision."
+      "finding": "Matches the published example when its rounded storage value is compared at the stated precision.",
+      "coefficient_note": "Appendix K supplies 0.9 for this pumped-system example. Australian roofed-area flow under Clause 5.4.6(a)(i) uses 1.0; the storage calculation preserves the example's supplied coefficient and does not select a project coefficient."
     }
   ]
 }

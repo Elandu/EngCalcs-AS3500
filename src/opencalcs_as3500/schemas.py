@@ -19,14 +19,10 @@ ROOF_CATCHMENT_INPUT_SCHEMA = {
 ROOF_FLOW_INPUT_SCHEMA = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["catchment_area_m2", "design_rainfall_intensity_mm_per_hour", "roof_surface"],
+    "required": ["catchment_area_m2", "design_rainfall_intensity_mm_per_hour"],
     "properties": {
         "catchment_area_m2": POSITIVE,
         "design_rainfall_intensity_mm_per_hour": POSITIVE,
-        "roof_surface": {
-            "type": "string",
-            "enum": list(("steel_non_absorbent", "near_flat_slightly_absorbent")),
-        },
     },
 }
 
