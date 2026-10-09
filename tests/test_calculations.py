@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from jsonschema import Draft202012Validator
 
-from opencalcs_as3500.calculations import (
+from engcalcs_as3500.calculations import (
     run_design_flow,
     run_open_channel_capacity,
     run_pervious_coefficient,
@@ -16,8 +16,8 @@ from opencalcs_as3500.calculations import (
     run_roof_flow,
     run_sag_pit_capacity,
 )
-from opencalcs_as3500.plugin import get_plugin
-from opencalcs_as3500.schemas import OUTPUT_SCHEMA
+from engcalcs_as3500.plugin import get_plugin
+from engcalcs_as3500.schemas import OUTPUT_SCHEMA
 from tests.verification_report import build_report
 
 ROOT = Path(__file__).resolve().parents[1]

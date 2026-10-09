@@ -1,4 +1,4 @@
-"""Optional integration checks against an installed OpenCalcs host."""
+"""Optional integration checks against an installed EngCalcs host."""
 
 import asyncio
 import json
@@ -8,12 +8,12 @@ from pathlib import Path
 import pytest
 
 PLUGIN_ENTRY = next(
-    (item for item in entry_points(group="opencalcs.plugins") if item.name == "as3500"),
+    (item for item in entry_points(group="engcalcs.plugins") if item.name == "as3500"),
     None,
 )
 if PLUGIN_ENTRY is None:
     pytest.skip(
-        "Install this wheel and the OpenCalcs host to run integration checks.",
+        "Install this wheel and the EngCalcs host to run integration checks.",
         allow_module_level=True,
     )
 
@@ -25,8 +25,8 @@ def _inputs(filename: str) -> dict:
 
 
 def test_entry_point_registers_calculations_and_registry_runs_examples():
-    pytest.importorskip("opencalcs")
-    from opencalcs.registry import CalculationRegistry
+    pytest.importorskip("engcalcs")
+    from engcalcs.registry import CalculationRegistry
 
     plugin = PLUGIN_ENTRY.load()()
     registry = CalculationRegistry()
@@ -55,10 +55,10 @@ def test_entry_point_registers_calculations_and_registry_runs_examples():
 
 
 def test_host_http_catalog_and_calculation_run():
-    pytest.importorskip("opencalcs")
+    pytest.importorskip("engcalcs")
     httpx = pytest.importorskip("httpx")
-    from opencalcs.api import create_app
-    from opencalcs.auth import AllowAllAuthenticator
+    from engcalcs.api import create_app
+    from engcalcs.auth import AllowAllAuthenticator
 
     async def request_routes():
         transport = httpx.ASGITransport(app=create_app(authenticator=AllowAllAuthenticator()))

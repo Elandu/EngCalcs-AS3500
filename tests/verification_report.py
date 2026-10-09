@@ -7,8 +7,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from opencalcs_as3500 import __version__
-from opencalcs_as3500.calculations import (
+from engcalcs_as3500 import __version__
+from engcalcs_as3500.calculations import (
     run_design_flow,
     run_open_channel_capacity,
     run_pervious_coefficient,

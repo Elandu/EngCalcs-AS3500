@@ -1,3 +1,5 @@
-"""Selected AS/NZS 3500.3:2025 stormwater calculations for OpenCalcs."""
+"""Compatibility namespace for the former opencalcs_as3500 package."""
 
-__version__ = "0.2.0"
+from engcalcs_as3500 import __version__
+
+__all__ = ["__version__"]

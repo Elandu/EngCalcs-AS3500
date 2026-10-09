@@ -8,7 +8,7 @@ The standard's published Appendix K pumped-system example is treated as a separa
 
 ## Release checks
 
-For package version 0.2.0, all 26 plugin and OpenCalcs host tests passed with the built wheel installed. The registry test runs all seven example inputs, and the HTTP test runs the roof-flow calculation. All ten independent benchmarks passed with a maximum absolute difference of 0.0. Ruff checks, formatting, compilation, wheel build, and source-distribution build also passed.
+For package version 0.2.0, all 26 plugin and EngCalcs host tests passed with the built wheel installed. The registry test runs all seven example inputs, and the HTTP test runs the roof-flow calculation. All ten independent benchmarks passed with a maximum absolute difference of 0.0. Ruff checks, formatting, compilation, wheel build, and source-distribution build also passed.
 
 ## Independent cases
 

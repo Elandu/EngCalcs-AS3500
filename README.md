@@ -1,6 +1,6 @@
-# OpenCalcs AS/NZS 3500.3 stormwater plugin
+# EngCalcs AS/NZS 3500.3 stormwater plugin
 
-This package adds seven selected stormwater calculations from AS/NZS 3500.3:2025 to OpenCalcs. It is an independently versioned plugin discovered through the OpenCalcs entry-point registry.
+This package adds seven selected stormwater calculations from AS/NZS 3500.3:2025 to EngCalcs. It is an independently versioned plugin discovered through the EngCalcs entry-point registry.
 
 ## Included calculations
 
@@ -24,19 +24,19 @@ Manning roughness and the blockage factor are explicit design inputs. The defaul
 
 ## Install
 
-Install this package in the same Python environment as OpenCalcs:
+Install this package in the same Python environment as EngCalcs:
 
-    pip install opencalcs-as3500
+    pip install engcalcs-as3500
 
 The package registers the entry point:
 
-    as3500 = opencalcs_as3500.plugin:get_plugin
+    as3500 = engcalcs_as3500.plugin:get_plugin
 
-OpenCalcs discovers it when installed. No host source changes are required.
+EngCalcs discovers it when installed. No host source changes are required.
 
 ## Run a calculation
 
-    from opencalcs_as3500.plugin import get_plugin
+    from engcalcs_as3500.plugin import get_plugin
 
     plugin = get_plugin()
     calc = next(
