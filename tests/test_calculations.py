@@ -218,8 +218,12 @@ def test_roof_area_link_has_exact_unit_compatible_descriptor() -> None:
     assert source["type"] == target["type"] == "number"
     assert source["unit"] == target["unit"] == "m2"
     assert "catchment_area_m2" in catchment["output_schema"]["properties"]["results"]["required"]
-    result = get_plugin().calculations[0].run({
-        "plan_area_m2": 100, "roof_slope_degrees": 0, "wind_exposure": "freely_exposed",
-    })
+    inputs = {
+        "plan_area_m2": 100,
+        "roof_slope_degrees": 0,
+        "wind_exposure": "freely_exposed",
+    }
+    calculation = get_plugin().calculations[0]
+    result = calculation.run(inputs)
     Draft202012Validator(catchment["output_schema"]).validate(result)
     assert result["results"]["catchment_area_m2"] == 100
