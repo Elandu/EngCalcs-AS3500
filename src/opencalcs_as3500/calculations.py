@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
 """Selected stormwater calculations with explicit units and bounded scope."""
 
 from collections.abc import Mapping

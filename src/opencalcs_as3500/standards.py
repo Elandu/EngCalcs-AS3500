@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
 """Standard edition metadata and reviewed values used by this module."""
 
 from dataclasses import dataclass

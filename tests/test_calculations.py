@@ -202,7 +202,7 @@ def test_nested_non_finite_input_is_rejected():
 def test_plugin_descriptor_has_stable_ids_and_scoped_standard():
     plugin = get_plugin()
     assert plugin.id == "stormwater.as3500"
-    assert plugin.source.endswith("/OpenCalcs-AS3500")
+    assert plugin.source.endswith("/EngCalcs-AS3500")
     assert plugin.calculations[0].descriptor()["jurisdiction"] == "AU"
     assert {item.standard.edition for item in plugin.calculations} == {"2025"}
     assert len({item.id for item in plugin.calculations}) == 7

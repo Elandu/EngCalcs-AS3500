@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
 """OpenCalcs plugin entry point and calculation descriptors."""
 
 from collections.abc import Callable, Mapping
@@ -122,11 +124,11 @@ def _calculations() -> tuple[Calculation, ...]:
 @dataclass(frozen=True)
 class AS3500Plugin:
     id: str = "stormwater.as3500"
-    name: str = "OpenCalcs Stormwater Drainage"
+    name: str = "EngCalcs Stormwater Drainage"
     version: str = __version__
     revision: str | None = None
     license: str = "AGPL-3.0-only"
-    source: str = "https://github.com/Elandu/OpenCalcs-AS3500"
+    source: str = "https://github.com/Elandu/EngCalcs-AS3500"
     calculations: tuple[Calculation, ...] = field(default_factory=_calculations)
 
     def descriptor(self) -> dict[str, Any]:

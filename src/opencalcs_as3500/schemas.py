@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-only
+
 """JSON schemas for calculation inputs and outputs."""
 
 from opencalcs_as3500.standards import PERVIOUS_RUNOFF_MULTIPLIERS
