@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LicenseRef-EngCalcs-Proprietary
+
 """Standard edition metadata and reviewed values used by this module."""
 
 from dataclasses import dataclass

@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: LicenseRef-EngCalcs-Proprietary
+
 """Selected stormwater calculations with explicit units and bounded scope."""
 
 from collections.abc import Mapping
