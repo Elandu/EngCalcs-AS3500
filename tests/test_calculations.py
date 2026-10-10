@@ -206,3 +206,24 @@ def test_plugin_descriptor_has_stable_ids_and_scoped_standard():
     assert plugin.calculations[0].descriptor()["jurisdiction"] == "AU"
     assert {item.standard.edition for item in plugin.calculations} == {"2025"}
     assert len({item.id for item in plugin.calculations}) == 7
+
+
+def test_roof_area_link_has_exact_unit_compatible_descriptor() -> None:
+    """Only the verified roof-area quantity is exposed for host direct links."""
+    calculations = {calc.id: calc.descriptor() for calc in get_plugin().calculations}
+    catchment = calculations["stormwater.as3500.roof_catchment"]
+    flow = calculations["stormwater.as3500.roof_flow"]
+    source = catchment["output_schema"]["properties"]["results"]["properties"]["catchment_area_m2"]
+    target = flow["input_schema"]["properties"]["catchment_area_m2"]
+    assert source["type"] == target["type"] == "number"
+    assert source["unit"] == target["unit"] == "m2"
+    assert "catchment_area_m2" in catchment["output_schema"]["properties"]["results"]["required"]
+    inputs = {
+        "plan_area_m2": 100,
+        "roof_slope_degrees": 0,
+        "wind_exposure": "freely_exposed",
+    }
+    calculation = get_plugin().calculations[0]
+    result = calculation.run(inputs)
+    Draft202012Validator(catchment["output_schema"]).validate(result)
+    assert result["results"]["catchment_area_m2"] == 100

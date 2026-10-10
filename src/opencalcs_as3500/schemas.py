@@ -21,7 +21,7 @@ ROOF_FLOW_INPUT_SCHEMA = {
     "additionalProperties": False,
     "required": ["catchment_area_m2", "design_rainfall_intensity_mm_per_hour"],
     "properties": {
-        "catchment_area_m2": POSITIVE,
+        "catchment_area_m2": {**POSITIVE, "unit": "m2"},
         "design_rainfall_intensity_mm_per_hour": POSITIVE,
     },
 }
@@ -145,4 +145,25 @@ OUTPUT_SCHEMA = {
         "standard_compliance_evaluated": {"const": False},
     },
     "additionalProperties": True,
+}
+
+# Provide the exact schema path and unit required for source-linked roof-flow
+# inputs. Other AS 3500 outputs keep their existing generic declarations.
+ROOF_CATCHMENT_OUTPUT_SCHEMA = {
+    **OUTPUT_SCHEMA,
+    "properties": {
+        **OUTPUT_SCHEMA["properties"],
+        "results": {
+            "type": "object",
+            "required": ["catchment_area_m2"],
+            "properties": {
+                "catchment_area_m2": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "unit": "m2",
+                },
+            },
+            "additionalProperties": True,
+        },
+    },
 }
