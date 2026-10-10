@@ -19,6 +19,7 @@ from opencalcs_as3500.schemas import (
     DESIGN_FLOW_INPUT_SCHEMA,
     OPEN_CHANNEL_INPUT_SCHEMA,
     OUTPUT_SCHEMA,
+    ROOF_CATCHMENT_OUTPUT_SCHEMA,
     PERVIOUS_COEFFICIENT_INPUT_SCHEMA,
     PUMPED_STORAGE_INPUT_SCHEMA,
     ROOF_CATCHMENT_INPUT_SCHEMA,
@@ -65,6 +66,7 @@ def _calculations() -> tuple[Calculation, ...]:
             "Freely exposed flat roofs or single-slope eaves-gutter roof catchment area.",
             deepcopy(ROOF_CATCHMENT_INPUT_SCHEMA),
             run_roof_catchment,
+            output_schema=deepcopy(ROOF_CATCHMENT_OUTPUT_SCHEMA),
         ),
         Calculation(
             "stormwater.as3500.roof_flow",
