@@ -1,0 +1,16 @@
+{
+  "upper_plan_area_m2": 100,
+  "lower_plan_area_m2": 200,
+  "upper_roof_slope_degrees": 15,
+  "lower_roof_slope_degrees": 5,
+  "rainfall_intensity_mm_per_hour": 100,
+  "upper_runoff_coefficient": 1.0,
+  "lower_runoff_coefficient": 1.0,
+  "spreader_width_m": 1.0,
+  "sheet_depth_m": 0.01,
+  "sheet_run_length_m": 2.0,
+  "receiving_surface_slope": 0.02,
+  "sheet_manning_n": 0.02,
+  "spreader_drop_m": 0.01,
+  "minor_loss_coefficient": 0.5
+}

@@ -1,0 +1,29 @@
+{
+  "hyetographs": [
+    {
+      "name": "design event A",
+      "hyetograph": [
+        {"duration_s": 600, "rainfall_intensity_mm_per_hour": 180},
+        {"duration_s": 600, "rainfall_intensity_mm_per_hour": 300},
+        {"duration_s": 600, "rainfall_intensity_mm_per_hour": 120}
+      ]
+    }
+  ],
+  "catchment_area_m2": 1000,
+  "runoff_coefficient": 0.9,
+  "loss_rate_mm_per_hour": 0,
+  "allowable_discharge_lps": 10,
+  "tank_bottom_stage_m": 0,
+  "tank_depth_m": 1.5,
+  "freeboard_m": 0.15,
+  "outlet": {
+    "type": "orifice",
+    "coefficient": 0.62,
+    "area_m2": 0.003,
+    "crest_stage_m": 0,
+    "gravity_m_per_s2": 9.80665
+  },
+  "duration_step_s": 60,
+  "maximum_plan_area_m2": 500,
+  "area_tolerance_m2": 0.01
+}

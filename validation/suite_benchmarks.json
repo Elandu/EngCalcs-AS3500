@@ -1,0 +1,476 @@
+{
+  "report": "expanded numerical verification",
+  "standard": "AS/NZS 3500.3:2025 plus explicitly identified historical CSIRO example",
+  "generator": "tests/suite_verification_report.py",
+  "method": "Expected values are independently evaluated from named equations or printed Appendix I anchors. Runtime outputs appear only as actual values. Routing's linear-reservoir case uses an analytic continuous solution with a tolerance for Modified Puls time-step error.",
+  "passed": true,
+  "case_count": 13,
+  "cases": [
+    {
+      "id": "fixed_gradient_colebrook_pipe",
+      "source_basis_and_independent_method": "Colebrook with the Darcy-gradient identity substituted to solve velocity explicitly; Q=VA.",
+      "inputs": {
+        "flow_lps": 1.0,
+        "internal_diameter_mm": 300.0,
+        "gradient": 0.003,
+        "roughness_k_mm": 0.015,
+        "kinematic_viscosity_m2_s": 1.004e-06
+      },
+      "comparisons": {
+        "capacity_lps": {
+          "actual": 77.29071745439822,
+          "expected": 77.29071745440056,
+          "absolute_difference": 2.3447910280083306e-12,
+          "absolute_tolerance": 1e-08,
+          "passed": true
+        },
+        "velocity_m_s": {
+          "actual": 0.014147106052612919,
+          "expected": 0.014147106052612919,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "darcy_friction_factor": {
+          "actual": 0.0393144675905594,
+          "expected": 0.03931446759055679,
+          "absolute_difference": 2.609024107869118e-15,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "laminar_charged_series",
+      "source_basis_and_independent_method": "Hagen-Poiseuille resistance 128 nu L/(g pi D^4) for each segment; series resistances sum.",
+      "inputs": {
+        "upstream_energy_level_m": 1.001,
+        "downstream_energy_level_m": 1.0,
+        "segments": [
+          {
+            "id": "small",
+            "length_m": 1.0,
+            "internal_diameter_mm": 10.0,
+            "roughness_k_mm": 0.0,
+            "kinematic_viscosity_m2_s": 1e-06,
+            "minor_loss_coefficients": [],
+            "start_pipe_centre_level_m": 0.0,
+            "end_pipe_centre_level_m": 0.0
+          },
+          {
+            "id": "large",
+            "length_m": 2.0,
+            "internal_diameter_mm": 20.0,
+            "roughness_k_mm": 0.0,
+            "kinematic_viscosity_m2_s": 1e-06,
+            "minor_loss_coefficients": [],
+            "start_pipe_centre_level_m": 0.0,
+            "end_pipe_centre_level_m": 0.0
+          }
+        ]
+      },
+      "comparisons": {
+        "flow_lps": {
+          "actual": 0.0021394791386335384,
+          "expected": 0.0021394791386337743,
+          "absolute_difference": 2.3592239273284576e-16,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        },
+        "head_balance_residual_m": {
+          "actual": 0.0,
+          "expected": 0.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "asymmetric_manning_normal_depth",
+      "source_basis_and_independent_method": "Manning trapezoid area/perimeter with distinct left/right side slopes; bisection solves Q=50 L/s.",
+      "inputs": {
+        "shape": "trapezoidal",
+        "bottom_width_m": 0.4,
+        "left_side_slope_horizontal_to_vertical": 1.0,
+        "right_side_slope_horizontal_to_vertical": 2.0,
+        "channel_gradient": 0.01,
+        "manning_n": 0.015,
+        "design_flow_lps": 50.0
+      },
+      "comparisons": {
+        "normal_depth_m": {
+          "actual": 0.08759760689499696,
+          "expected": 0.08759760689499696,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "capacity_lps": {
+          "actual": 49.999999999999986,
+          "expected": 50.0,
+          "absolute_difference": 1.4210854715202004e-14,
+          "absolute_tolerance": 1e-08,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "storage_constant_event_no_outlet",
+      "source_basis_and_independent_method": "Direct event volume: Ac * R/3600 * duration / 1000; no physical outlet is supplied.",
+      "inputs": {
+        "stage_storage": [
+          {
+            "stage_m": 0.0,
+            "storage_m3": 0.0
+          },
+          {
+            "stage_m": 1.0,
+            "storage_m3": 100.0
+          }
+        ],
+        "stage_discharge": [
+          {
+            "stage_m": 0.0,
+            "discharge_lps": 0.0
+          },
+          {
+            "stage_m": 1.0,
+            "discharge_lps": 0.0
+          }
+        ],
+        "hyetograph": [
+          {
+            "duration_s": 100.0,
+            "rainfall_intensity_mm_per_hour": 360.0
+          }
+        ],
+        "catchment_area_m2": 1000.0,
+        "runoff_coefficient": 1.0,
+        "loss_rate_mm_per_hour": 0.0,
+        "allowable_discharge_lps": 0.0,
+        "duration_step_s": 10.0
+      },
+      "comparisons": {
+        "peak_storage_m3": {
+          "actual": 9.999999999999998,
+          "expected": 10.0,
+          "absolute_difference": 1.7763568394002505e-15,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        },
+        "mass_balance_error_m3": {
+          "actual": 1.7763568394002505e-15,
+          "expected": 0.0,
+          "absolute_difference": 1.7763568394002505e-15,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "storage_linear_reservoir_analytic",
+      "source_basis_and_independent_method": "Continuous solution S(t)=I/k*(1-exp(-k*t)); compare to 1 s trapezoidal Modified Puls routing.",
+      "inputs": {
+        "tank_plan_area_m2": 10.0,
+        "tank_bottom_stage_m": 0.0,
+        "tank_top_stage_m": 2.0,
+        "stage_discharge": [
+          {
+            "stage_m": 0.0,
+            "discharge_lps": 0.0
+          },
+          {
+            "stage_m": 2.0,
+            "discharge_lps": 2.0
+          }
+        ],
+        "hyetograph": [
+          {
+            "duration_s": 100.0,
+            "rainfall_intensity_mm_per_hour": 3.6
+          }
+        ],
+        "catchment_area_m2": 1000.0,
+        "runoff_coefficient": 1.0,
+        "loss_rate_mm_per_hour": 0.0,
+        "allowable_discharge_lps": 100.0,
+        "duration_step_s": 1.0
+      },
+      "comparisons": {
+        "peak_storage_m3": {
+          "actual": 0.09950166259082333,
+          "expected": 0.09950166250831893,
+          "absolute_difference": 8.250439220702788e-11,
+          "absolute_tolerance": 1e-06,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "free_orifice_capacity",
+      "source_basis_and_independent_method": "Q = Cd A sqrt(2 g H), converted from m3/s to L/s.",
+      "inputs": {
+        "opening_area_m2": 0.01,
+        "discharge_coefficient": 0.62,
+        "head_m": 1.0
+      },
+      "comparisons": {
+        "capacity_lps": {
+          "actual": 27.45788141863825,
+          "expected": 27.457881418638255,
+          "absolute_difference": 3.552713678800501e-15,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "free_rectangular_weir_capacity",
+      "source_basis_and_independent_method": "Supplied-coefficient convention Q = C L H^(3/2), converted to L/s.",
+      "inputs": {
+        "crest_length_m": 1.0,
+        "discharge_coefficient": 1.7,
+        "head_m": 0.25
+      },
+      "comparisons": {
+        "capacity_lps": {
+          "actual": 212.5,
+          "expected": 212.5,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "valley_geometry_and_manning_capacity",
+      "source_basis_and_independent_method": "Intersecting-plane roof gradients derive each side slope; asymmetric trapezoid Manning capacity.",
+      "inputs": {
+        "left_roof_slope_degrees": 20,
+        "right_roof_slope_degrees": 25,
+        "plan_angle_degrees": 90,
+        "bottom_width_m": 0.1,
+        "flow_depth_m": 0.08,
+        "channel_gradient": 0.01,
+        "manning_n": 0.013,
+        "design_rainfall_intensity_mm_per_hour": 100,
+        "contributing_plan_area_m2": 50,
+        "wave_allowance_m": 0.025,
+        "freeboard_m": 0.03,
+        "sheet_width_m": 0.45,
+        "obstruction_width_m": 0.02
+      },
+      "comparisons": {
+        "left_side_slope_horizontal_to_vertical": {
+          "actual": 4.46530250910688,
+          "expected": 4.46530250910688,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "right_side_slope_horizontal_to_vertical": {
+          "actual": 2.7204298203205264,
+          "expected": 2.7204298203205264,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "capacity_lps": {
+          "actual": 29.898311940501376,
+          "expected": 29.898311940501376,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "rectangular_roof_sheet_manning_capacity",
+      "source_basis_and_independent_method": "Rectangular sheet A=b*y and R=A/(b+2y), followed by Manning's equation.",
+      "inputs": {
+        "upper_plan_area_m2": 10.0,
+        "lower_plan_area_m2": 20.0,
+        "upper_roof_slope_degrees": 0.0,
+        "lower_roof_slope_degrees": 0.0,
+        "rainfall_intensity_mm_per_hour": 36.0,
+        "upper_runoff_coefficient": 1.0,
+        "lower_runoff_coefficient": 1.0,
+        "spreader_width_m": 1.0,
+        "sheet_depth_m": 0.01,
+        "sheet_run_length_m": 1.0,
+        "receiving_surface_slope": 0.01,
+        "sheet_manning_n": 0.02,
+        "spreader_drop_m": 0.0,
+        "minor_loss_coefficient": 0.0
+      },
+      "comparisons": {
+        "sheet_capacity_lps": {
+          "actual": 2.29035721978199,
+          "expected": 2.2903572197819906,
+          "absolute_difference": 4.440892098500626e-16,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "csiro_imperial_eaves_equations_and_conversion",
+      "source_basis_and_independent_method": "Martin (1973) Eqs. (1),(3), pp. 2,5-7; imperial gallons converted with 4.54609/60.",
+      "inputs": {
+        "catchment_area_m2": 100,
+        "rainfall_intensity_mm_per_hour": 180,
+        "gutter_slope_condition": "sloping",
+        "bend_distance_category": "6_to_12_ft",
+        "outlet_position": "central",
+        "cross_section_type": "rounded",
+        "gradient": 0.002,
+        "product_catalog": [
+          {
+            "product_id": "rounded_quad_10k",
+            "gross_cross_section_area_mm2": 10000,
+            "effective_cross_sectional_area_mm2": 9600
+          }
+        ]
+      },
+      "comparisons": {
+        "flow_load_imperial_gallons_per_minute": {
+          "actual": 66.36332170302136,
+          "expected": 66.36332170302136,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-09,
+          "passed": true
+        },
+        "flow_load_lps": {
+          "actual": 5.02822721934814,
+          "expected": 5.02822721934814,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "required_gutter_area_in2_before_shape_adjustment": {
+          "actual": 13.292867423197675,
+          "expected": 13.292867423197675,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "roof_slope_wall_and_grouped_catchment_arithmetic",
+      "source_basis_and_independent_method": "Table 3.4.3.2 30 degree factor=1.29; Clause 3.4.4.1 wall term=0.5 Av; adjacent roof uses 0.5 absolute vertical-area difference.",
+      "inputs": {
+        "catchments": [
+          {
+            "catchment_id": "north",
+            "geometry": "single_slope_freely_exposed",
+            "plan_area_m2": 100.0,
+            "roof_slope_degrees": 30.0
+          },
+          {
+            "catchment_id": "north",
+            "geometry": "vertical_wall_flat_roof",
+            "plan_area_m2": 20.0,
+            "vertical_area_m2": 40.0
+          },
+          {
+            "catchment_id": "south",
+            "geometry": "adjacent_sloping_roofs",
+            "plan_area_1_m2": 40.0,
+            "plan_area_2_m2": 35.0,
+            "vertical_area_1_m2": 18.0,
+            "vertical_area_2_m2": 30.0
+          }
+        ]
+      },
+      "comparisons": {
+        "north_catchment_area_m2": {
+          "actual": 169.0,
+          "expected": 169.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "south_catchment_area_m2": {
+          "actual": 81.0,
+          "expected": 81.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        },
+        "total_catchment_area_m2": {
+          "actual": 250.0,
+          "expected": 250.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 1e-10,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "appendix_i1_box_gutter_chart_anchor",
+      "source_basis_and_independent_method": "Printed Appendix I.1 / Figure H.1 worked-example anchor: 15 L/s, 450 mm width, 1:200 gradient -> 140 mm.",
+      "inputs": {
+        "design_flow_lps": 15,
+        "box_width_mm": 450,
+        "gradient": 0.005
+      },
+      "comparisons": {
+        "minimum_depth_including_freeboard_mm": {
+          "actual": 140.0,
+          "expected": 140.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 0.0,
+          "passed": true
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "appendix_i1_rainhead_geometry_anchor",
+      "source_basis_and_independent_method": "Appendix I.1 H.3: ceil(1.67*144 mm)=241 mm minimum depth; printed minimum length anchor=185 mm.",
+      "inputs": {
+        "design_flow_lps": 15,
+        "box_width_mm": 450,
+        "gradient": 0.005,
+        "pipe": {
+          "shape": "rectangular",
+          "width_mm": 150,
+          "height_mm": 100
+        },
+        "gutter_depth_at_1_in_200_mm": 140,
+        "selected_depth_mm": 250,
+        "selected_length_mm": 200
+      },
+      "comparisons": {
+        "minimum_total_depth_mm": {
+          "actual": 241.0,
+          "expected": 241,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 0.0,
+          "passed": true
+        },
+        "minimum_length_mm": {
+          "actual": 185.0,
+          "expected": 185.0,
+          "absolute_difference": 0.0,
+          "absolute_tolerance": 0.0,
+          "passed": true
+        }
+      },
+      "passed": true
+    }
+  ]
+}

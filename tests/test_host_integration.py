@@ -21,7 +21,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def _inputs(filename: str) -> dict:
-    return json.loads((ROOT / "examples" / filename).read_text(encoding="utf-8"))
+    record = json.loads((ROOT / "examples" / filename).read_text(encoding="utf-8"))
+    return record.get("inputs", record)
 
 
 def test_entry_point_registers_calculations_and_registry_runs_examples():
@@ -31,16 +32,7 @@ def test_entry_point_registers_calculations_and_registry_runs_examples():
     plugin = PLUGIN_ENTRY.load()()
     registry = CalculationRegistry()
     assert plugin.id == "stormwater.as3500"
-    assert len(plugin.calculations) == 7
-    examples = {
-        "stormwater.as3500.roof_catchment": "roof_catchment.json",
-        "stormwater.as3500.roof_flow": "roof_flow.json",
-        "stormwater.as3500.pervious_runoff_coefficient": "pervious_runoff_coefficient.json",
-        "stormwater.as3500.design_flow": "surface_design_flow.json",
-        "stormwater.as3500.open_channel_capacity": "open_channel_capacity.json",
-        "stormwater.as3500.sag_pit_capacity": "sag_pit_capacity.json",
-        "stormwater.as3500.pumped_storage": "pumped_storage.json",
-    }
+    examples = json.loads((ROOT / "examples" / "manifest.json").read_text(encoding="utf-8"))
     results = {
         calculation_id: registry.run(calculation_id, _inputs(filename))
         for calculation_id, filename in examples.items()
@@ -86,3 +78,26 @@ def test_host_http_catalog_and_calculation_run():
     assert roof_result.status_code == 200
     assert roof_result.json()["results"]["runoff_coefficient"] == 1.0
     assert roof_result.json()["results"]["design_flow_lps"] == pytest.approx(50)
+
+
+def test_every_calculation_executes_through_host_http():
+    pytest.importorskip("opencalcs")
+    httpx = pytest.importorskip("httpx")
+    from opencalcs.api import create_app
+    from opencalcs.auth import AllowAllAuthenticator
+
+    examples = json.loads((ROOT / "examples" / "manifest.json").read_text(encoding="utf-8"))
+
+    async def request_routes():
+        transport = httpx.ASGITransport(app=create_app(authenticator=AllowAllAuthenticator()))
+        async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as client:
+            for calculation, filename in examples.items():
+                descriptor = await client.get(f"/api/v1/calculations/{calculation}")
+                assert descriptor.status_code == 200, (calculation, descriptor.text)
+                response = await client.post(
+                    f"/api/v1/calculations/{calculation}/run", json={"inputs": _inputs(filename)}
+                )
+                assert response.status_code == 200, (calculation, response.text)
+                assert response.json()["calculation"] == calculation
+
+    asyncio.run(request_routes())

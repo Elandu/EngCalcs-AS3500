@@ -1,73 +1,71 @@
-# EngCalcs AS/NZS 3500.3 stormwater plugin
+# EngCalcs stormwater drainage plugin
 
-This package adds seven selected stormwater calculations from AS/NZS 3500.3:2025 to OpenCalcs. It is an independently versioned plugin discovered through the OpenCalcs entry-point registry.
+An independently versioned OpenCalcs plugin for Australian stormwater calculations. Version 0.3 adds roof drainage workflows, pipes, networks, charged systems, channels, detention routing and sizing, rainfall records, CSV and calculation reports.
 
-## Included calculations
+## Calculation families
 
-- stormwater.as3500.roof_catchment - Freely exposed flat-roof or single-slope eaves-gutter area
-- stormwater.as3500.roof_flow - Roof design flow using supplied intensity and the Australian roof coefficient (1.0)
-- stormwater.as3500.pervious_runoff_coefficient - Australian unroofed-pervious runoff coefficient
-- stormwater.as3500.design_flow - Combined surface design flow for weighted subcatchments
-- stormwater.as3500.open_channel_capacity - Rectangular or trapezoidal Manning capacity
-- stormwater.as3500.sag_pit_capacity - Sag-pit inlet capacity for ponding up to 120 mm
-- stormwater.as3500.pumped_storage - Pumped-system effective and wet-well storage
+| Area | Tools |
+|---|---|
+| Catchments | Flat/sloping/partially exposed roofs, adjacent roofs, walls, correlated wind cases, higher-roof discharge and spreader details |
+| Eaves | Figure 3.5.5 gutter sizing, Table 3.5.2 downpipes, exact manufacturer ratings, count/catchment checks, Appendix F overflow, historical CSIRO long-gutter sizing |
+| Box gutters | Appendix H box, rainhead, sump, side and high-capacity overflow procedures; independent normal/critical-depth diagnostics; historical CSIRO box/receiver estimates |
+| Pipes | Colebrook-White capacity, theoretical bore and catalogue selection, velocity, converging networks, individual node rainfall, invert/cover checks, CSV execution |
+| Charged systems | Darcy-Weisbach friction and minor losses, head/flow solve, series pipes and hydraulic-grade/pressure profiles |
+| Channels and valleys | Manning capacity/normal depth, asymmetric and triangular sections, widths/velocities, floor clearance/freeboard; valley table selection and separate hydraulic/wave-allowance checks |
+| Storage | Pumped storage, orifice/weir capacity, level-pool routing, bypass/overflow and rectangular detention storage sizing across supplied storms |
+| Workflow | Exact location/AEP/duration rainfall-record selection, strict CSV import, fresh calculation packs with job details, hashes, HTML and PDF |
 
-See docs/coverage.md for the clause map, inputs, assumptions, and exclusions. Calculation results name their clauses and always report that they are not a full standard-compliance assessment.
+[Coverage and limits](docs/coverage.md), [RGD comparison](docs/rgd_gap_audit.md), and [verification](docs/verification.md) explain the method boundaries. Every registered tool has an executable example in [the manifest](examples/manifest.json).
 
-## Inputs that must come from the project
+## Install and run
 
-The package does not generate design rainfall. Supply intensity values selected for the location, AEP, duration, and method required by the standard. For pervious areas, also supply the applicable runoff-coefficient multiplier m from Table 5.4.6(A). The package does not infer a catchment time of concentration or select an AEP for the designer.
+Requires Python 3.12 or later. Install the built wheel in the same environment as the OpenCalcs host:
 
-For Australian roofed areas, Clause 5.4.6 specifies a runoff coefficient of 1.0; the roof-flow calculation applies it directly. Appendix K's pumped-system example supplies a coefficient of 0.9, which the storage calculation accepts as given to reproduce that example. The pumped-storage calculation does not select or validate a project coefficient.
+```powershell
+python -m pip install .
+# PDF export:
+python -m pip install ".[reports]"
+python -m opencalcs_as3500 list
+python -m opencalcs_as3500 run stormwater.as3500.roof_flow --input examples/roof_flow.json
+python -m opencalcs_as3500 report --input examples/calculation_pack.json --output report.pdf --format pdf
+```
 
-Manning roughness and the blockage factor are explicit design inputs. The default sag-pit blockage factor is 0.5, the common value identified by the standard. Confirm all project inputs, site conditions, and receiving-system constraints independently.
+The command-line alias is `opencalcs-as3500`. The stable plugin entry point remains `as3500 = opencalcs_as3500.plugin:get_plugin`. The host discovers installed calculations without source changes. All inputs and outputs are JSON with explicit unit suffixes; gradients are dimensionless rise/run, not a 1:N denominator.
 
-## Install
+```python
+from opencalcs_as3500.plugin import get_plugin
 
-Install this package in the same Python environment as OpenCalcs:
-
-    pip install opencalcs-as3500
-
-The package registers the entry point:
-
-    as3500 = opencalcs_as3500.plugin:get_plugin
-
-OpenCalcs discovers it when installed. No host source changes are required.
-
-## Run a calculation
-
-    from opencalcs_as3500.plugin import get_plugin
-
-    plugin = get_plugin()
-    calc = next(
-        item for item in plugin.calculations
-        if item.id == "stormwater.as3500.pumped_storage"
-    )
-    result = calc.run({
+calculations = {c.id: c for c in get_plugin().calculations}
+result = calculations["stormwater.as3500.roof_flow"].run(
+    {
         "catchment_area_m2": 1000,
-        "weighted_runoff_coefficient": 0.9,
-        "rainfall_10pct_120min_mm_per_hour": 44.4,
-        "pump_capacity_lps": 30,
-    })
+        "design_rainfall_intensity_mm_per_hour": 180,
+    }
+)
+assert result["results"]["design_flow_lps"] == 50
+```
 
-The pumped-storage example reproduces the Appendix K case. Its exact arithmetic gives 79.92 m3 runoff, 54 m3 pumped in 30 minutes, and 25.92 m3 required wet-well storage, above the 10 m3 minimum for this catchment.
+## Source and design inputs
+
+Current-standard methods reference **AS/NZS 3500.3:2025**. The CSIRO methods reference K. G. Martin's **1973** research separately. General hydraulic tools carry no claim to be a current-standard design procedure. The Australian roofed-area coefficient is **1.0**.
+
+Supply project rainfall, coefficients, catchment geometry, product internal bores, hydraulic losses, outlet data and authority criteria. The plugin selects events from supplied rainfall records; it does not download BOM IFD data or infer time of concentration. Manufacturer catalogue ratings retain their source. Appendix H support and the unresolved large-valley graph are described explicitly in the coverage documentation.
+
+Results always set `full_standard_compliance=false` and `standard_compliance_evaluated=false`. Numerical checks do not assess every installation detail, authority rule, project condition or CFD performance requirement. Licensed standards and recovered third-party implementation code are not included.
 
 ## Development
 
-Use Python 3.12 or later:
+```powershell
+python -m pip install -e ".[dev,reports]"
+python -m pytest -q
+python -m ruff check .
+python -m ruff format --check .
+python -m build
+python tests/verification_report.py
+```
 
-    uv sync --extra dev
-    uv run pytest
-    uv run ruff check .
-    uv run ruff format --check .
-    uv build
-
-The numerical verification report is generated by:
-
-    uv run python tests/verification_report.py
-
-The selected clause calculations, independent numerical checks, and published-example comparison are described in docs/verification.md.
+Host integration tests require OpenCalcs. CI installs a pinned public host revision and repeats the tests against the installed wheel outside this checkout. A skipped integration module is not evidence of host acceptance.
 
 ## Licensing
 
-This software revision is licensed under AGPL-3.0-only; see `LICENSE`. Legacy `opencalcs` names in Python packages and entry points remain for compatibility.
+This revision is free software licensed under [AGPL-3.0-only](LICENSE). Legacy `opencalcs` identifiers remain for compatibility.

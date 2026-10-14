@@ -1,0 +1,12 @@
+{
+  "method": "Independent circular-pipe continuity and Darcy/Colebrook calculation checks; water kinematic viscosity 1.004e-6 m2/s unless stated.",
+  "benchmarks": [
+    {"name": "continuity_300mm", "flow_lps": 138.89, "internal_diameter_mm": 300, "expected_velocity_m_s": 1.9648915596, "tolerance_m_s": 1e-9},
+    {"name": "continuity_450mm", "flow_lps": 277.78, "internal_diameter_mm": 450, "expected_velocity_m_s": 1.7465702752, "tolerance_m_s": 1e-9},
+    {"name": "laminar_darcy_factor", "reynolds_number": 1000, "expected_darcy_friction_factor": 0.064, "equation": "64/Re"},
+    {"name": "turbulent_300mm_inversion", "internal_diameter_mm": 300, "flow_lps": 84.823001646924, "velocity_m_s": 1.2, "gradient": 0.003560406545, "roughness_k_mm": 0.015, "darcy_friction_factor": 0.014548192017, "method": "Solve Colebrook-White independently for f at specified D, V, k, nu; derive S=f*V^2/(2*g*D) and Q=V*pi*D^2/4."},
+    {"name": "turbulent_450mm_inversion", "internal_diameter_mm": 450, "flow_lps": 222.660379323177, "velocity_m_s": 1.4, "gradient": 0.002923451654, "roughness_k_mm": 0.015, "darcy_friction_factor": 0.013164459411, "method": "Solve Colebrook-White independently for f at specified D, V, k, nu; derive S=f*V^2/(2*g*D) and Q=V*pi*D^2/4."}
+  ],
+  "independent_equations": ["Q = V*pi*D^2/4", "Re = V*D/nu", "f=64/Re for laminar flow", "Colebrook-White for turbulent flow", "hf=f*(L/D)*V^2/(2g)", "hm=sum(K)*V^2/(2g)"],
+  "limits": "Benchmarks verify core equations and inversion consistency; they are not a full-standard compliance assessment or a manufacturer diameter catalogue."
+}

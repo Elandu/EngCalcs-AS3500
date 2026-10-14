@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "opencalcs-as3500"
-version = "0.2.0"
-description = "Selected AS/NZS 3500.3:2025 stormwater drainage calculations for OpenCalcs."
+version = "0.3.0"
+description = "Stormwater drainage hydraulics and selected AS/NZS 3500.3:2025 design methods."
 readme = "README.md"
 requires-python = ">=3.12"
 license = "AGPL-3.0-only"
@@ -16,7 +16,11 @@ Repository = "https://github.com/Elandu/EngCalcs-AS3500"
 Issues = "https://github.com/Elandu/EngCalcs-AS3500/issues"
 
 [project.optional-dependencies]
-dev = ["pytest>=8.3,<9", "ruff>=0.11,<1", "build>=1.2,<2"]
+dev = ["pytest>=8.3,<9", "ruff>=0.11,<1", "build>=1.2,<2", "pypdf>=5,<7"]
+reports = ["reportlab>=4.2,<5"]
+
+[project.scripts]
+opencalcs-as3500 = "opencalcs_as3500.__main__:main"
 
 [project.entry-points."opencalcs.plugins"]
 as3500 = "opencalcs_as3500.plugin:get_plugin"

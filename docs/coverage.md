@@ -1,40 +1,48 @@
 # Calculation coverage
 
-## Standard basis
+## Basis and boundaries
 
-The implemented basis is AS/NZS 3500.3:2025, Plumbing and drainage - Part 3: Stormwater drainage. The package targets Australian design inputs and runoff-coefficient choices; it does not implement the New Zealand-specific runoff tables. The source edition is recorded in every calculation descriptor and result. No standard pages, scans, OCR, or extracted text are included in this repository.
+The package targets Australian inputs. Selected standard procedures reference AS/NZS 3500.3:2025. Historical CSIRO methods reference Martin (1973); general hydraulic methods use their stated equations and supplied project data. Descriptors distinguish these method families, and host provenance does not identify general methods as current-standard calculations.
 
-## Implemented methods
+All results retain `full_standard_compliance=false` and `standard_compliance_evaluated=false`. These tools do not assess an entire project or all provisions of the standard. No licensed pages, scans, OCR, extracted source text, or recovered third-party implementation code are distributed.
 
-| Calculation | Clause basis | Included scope |
+## Implemented scope
+
+| Calculation suffixes (prefix `stormwater.as3500.`) | Basis | Scope |
 |---|---|---|
-| Roof catchment area | 3.4.3.1 and 3.4.3.2 | Freely exposed flat roofs and single-slope roofs draining to eaves gutters; the flat-roof plan area includes contributing gutters, and the single-slope factor is evaluated from roof angle. |
-| Roof design flow | 5.4.6 and 5.4.8 | Supplied design intensity and the Australian roofed-area coefficient, Cr = 1.0. |
-| Pervious runoff coefficient | 5.4.6 | Australian equation, intensity limits, one of the Table 5.4.6(A) multipliers, and sandy/clay soil adjustment. |
-| Surface design flow | 5.4.7 and 5.4.8 | Plan-area subcatchments with supplied coefficients and design rainfall intensity. |
-| Open-channel capacity | 5.4.9 | Rectangular or trapezoidal wetted section and user-selected Manning roughness. |
-| Sag-pit capacity | 5.4.10.1 | Inlet perimeter, blockage factor, and ponding depth no greater than 0.12 m. |
-| Pumped-system storage | 8.3.6 | The 10% AEP, 120-minute runoff volume, pump volume over 30 minutes, and minimum wet-well storage. Pump capacity is an input that must be separately selected and checked under Clause 8.4(a). |
+| `roof_catchment`, `roof_flow` | 3.4.3, 5.4.6, 5.4.8 | Legacy freely exposed geometry, Australian roof coefficient 1.0, supplied intensity |
+| `roof_catchment_plan` | 3.4.3-3.4.4 | Grouped flat, exposed/partially exposed, adjacent-roof and wall geometry; shared wind scenarios and governing totals |
+| `higher_catchment_diagnostic` | 3.4.5 | Upper/lower catchment accounting, treated strips/material details, supplied downstream capacities |
+| `eaves_gutter_chart`, `eaves_gutter_system`, `eaves_overflow` | 3.5, Appendix F | Bounded Figure 3.5.5 sizing or exact sourced product rating; Table 3.5.2 downpipe selection; count/catchment checks; front bead, back gap and slot overflow |
+| `csiro_eaves_gutter_research` | Martin 1973 Eqs 1-3, Table 2 | Historical slope, bend and outlet-position factors, required gross area, supplied product selection and half-area downpipe estimate |
+| `box_gutter_design`, `rainhead_design`, `box_side_overflow`, `box_high_capacity_overflow` | 3.7, Appendix H | Exact Appendix I anchors and bounded conservative chart envelopes; unsupported chart contexts require traceable readings. Actual pipe family and H.3 gutter/rainhead depths are checked |
+| `box_gutter_hydraulics` | Manning/critical depth | Independent uniform-flow diagnostic with explicit freeboard; does not replace H.1 |
+| `csiro_1973_box_gutter`, `csiro_1973_rainhead` | Martin 1973 Eqs 4-8 | Historical rectangular water-section and circular receiver estimates, with explicit Imperial-to-SI conversion |
+| `pervious_runoff_coefficient`, `design_flow` | 5.4.6-5.4.8 | Australian pervious soil/multiplier branches and weighted plan-area runoff |
+| `open_channel_capacity`, `channel_capacity`, `channel_design` | 5.4.9 | Manning capacity/normal depth, rectangular/asymmetric trapezoidal/triangular sections, surface width, velocity, supplied floor/freeboard checks |
+| `pipe_capacity`, `pipe_design`, `pipe_network`, `pipe_network_csv` | 5.4.11 | Colebrook-White full-pipe capacity, theoretical/catalogue bore, design-flow velocity, converging graph propagation, individual node rainfalls, invert and supplied endpoint cover checks |
+| `charged_pipe`, `charged_pipe_system` | Darcy-Weisbach/Colebrook | Steady full-pipe energy balance, supplied minor losses, head/flow solution, series bores, hydraulic-grade and endpoint pressure checks |
+| `sag_pit_capacity` | 5.4.10.1 | Sag inlet perimeter/blockage and ponding through 0.12 m |
+| `roof_spreader_sheet_flow`, `valley_gutter_manning_check` | General hydraulic models | Supplied spreader sheet geometry/losses; valley geometry, normal/critical depth, explicit wave and freeboard allowances. These are not CFD |
+| `valley_gutter_standard_selection` | 3.6, Table 3.6.2 | Verified small-catchment table. Automatic Figure 3.6.2 selection above 20 m2 is guarded because the supplied 2025 figure is inconsistent with physical monotonicity |
+| `pumped_storage` | 8.3.6 | 10% AEP/120-minute volume, 30-minute pumping, wet-well minima; pump capacity is an input |
+| `detention_orifice_capacity`, `detention_weir_capacity`, `detention_routing`, `detention_storage_sizing` | General outlet/continuity equations | Supplied coefficients and stage curves, rectangular tanks, hyetographs/losses, bypass, overflow, volume balance and multi-event plan-area search |
+| `rainfall_selection`, `csv_import`, `calculation_pack` | Workflow | Exact supplied rainfall records, explicit Australian event defaults, strict CSV, fresh result records and hashes, HTML/PDF |
 
-## Input meaning
+## Project inputs and units
 
-- Areas are in square metres.
-- Rainfall intensity is in millimetres per hour.
-- Flow is in litres per second.
-- For a flat roof, the plan area includes any gutters. For a single-slope roof, enter the roof plan area used by Clause 3.4.3.2.
-- Roof slope is in degrees and is limited to 0 through 65 degrees. The supported roof-area equations require freely exposed roofs.
-- For Australian roofed areas, Clause 5.4.6(a)(i) specifies a runoff coefficient of 1.0. For unroofed impervious areas, Clause 5.4.6(a)(ii) specifies 0.9. The pervious coefficient is calculated separately.
-- Channel depth, perimeter, and hydraulic radius are in metres.
-- Manning roughness and channel gradient are dimensionless.
-- Pumped-system volumes are in cubic metres.
-- The pervious-area runoff-coefficient multiplier m must correspond to the selected AEP in Table 5.4.6(A). The accepted values are 0.8, 0.85, 0.95, 1.0, 1.05, 1.15, 1.2, and 1.25.
-- For the pumped-storage calculation, the rainfall intensity must be the 10% AEP, 120-minute intensity for the project location.
-- The pumped-storage calculation accepts a weighted runoff coefficient as an input and does not determine whether that coefficient is suitable for a particular catchment.
+Area is m2, rainfall is mm/h, flow is L/s, storage is m3 and channel dimensions are m. Pipe and gutter dimensions explicitly use mm. Gradients are rise/run: enter 0.005 for 1:200. Catalogue pipe sizes must be **internal bores**, not nominal outside diameters. Roughness is absolute k in mm; kinematic viscosity is m2/s. Manning n, outlet coefficients and minor-loss coefficients are separate quantities.
 
-The intensity and AEP values must be selected by the designer from the applicable rainfall source and standard method. The package does not calculate IFD values, time of concentration, or rainfall temporal patterns.
+Supply project location/rainfall records, catchment boundaries, wind-direction geometry, product ratings and bores, surface/invert levels, roughness, losses, tailwater, rainfall temporal patterns and authority criteria. The rainfall selector does not retrieve BOM IFD or calculate time of concentration. The network passes supplied design flows through a converging graph; it does not calculate travel-time-dependent storm intensity, route an unsteady network, solve surcharge/backwater, or invent flow splits at bifurcations.
 
-## Exclusions
+## Source issue: valley Figure 3.6.2
 
-This package does not implement all of AS/NZS 3500.3. In particular, it does not size partially exposed roof catchments, box gutters, downpipes, vertical-wall catchments, roof spreaders, pipe networks, culverts, on-grade pits, pumps, wet wells, surcharge paths, or complete site drainage. It does not select a suitable storm or site-specific coefficients for unsupported surfaces, assess floor clearances or freeboard, perform hydraulic modelling, or check other standards, NCC provisions, local authority requirements, or construction details.
+The supplied 2025 figure plots increasing allowable design rainfall as catchment area increases for a fixed effective width. That would increase permitted hydraulic loading with area, contrary to conservation-based capacity. The licensed 2018 and 2021 editions were checked: both limit this general method to 20 m2 and contain the table, without the new graph. No applicable 2025 correction file was found in the provided standards folder on 14 October 2026.
 
-The implemented methods are calculation aids for the listed clauses. A passing numeric capacity or storage result is not a statement that a project complies with the standard.
+The package implements the verified table and provides separate hydraulic checks for larger valleys. It does not silently reverse, fit or reinterpret the inconsistent graph. A publisher-verified correction is required to enable automatic selection from that figure. The CFD/performance method described by RGD is not recovered in the supplied client scripts and is not claimed here.
+
+## Remaining project/design limits
+
+Appendix H envelopes are conservative graph selections. H.1 retains unadjusted depth without gradient reduction; H.3 uses actual pipe families and adverse gutter/rainhead-depth brackets; overflow readings disclose their allowances. Unsupported chart ranges and product-specific data require sourced inputs. General diagnostics do not establish Appendix H compliance. CSIRO's 1973 research is historical, including its original geometry assumptions and empirical factors; it is not a current-standard compliance path.
+
+Authority OSD criteria, complete storm selection, blockage/emergency scenarios, culverts/on-grade inlet procedures, soil/site suitability, downstream receiving conditions, pump selection/controls, structural design, materials/installation, other standards and NCC checks require separate project assessment. Charged-system results assume full pipes and steady water flow; air locking, priming, siphonic initiation and transients are outside the model. Floor clearance is evaluated only from supplied levels; pipe cover is checked at supplied endpoints.

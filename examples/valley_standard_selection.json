@@ -1,0 +1,13 @@
+{
+  "jurisdiction": "AU",
+  "rainfall_duration_minutes": 5,
+  "design_rainfall_intensity_mm_per_hour": 250,
+  "catchment_area_m2": 20,
+  "left_roof_slope_degrees": 20,
+  "right_roof_slope_degrees": 20,
+  "valley_side_angle_degrees": 16.5,
+  "obstructed_below_effective_width": false,
+  "available_sheet_width_mm": 395,
+  "available_effective_width_mm": 254,
+  "available_total_gutter_depth_mm": 50
+}

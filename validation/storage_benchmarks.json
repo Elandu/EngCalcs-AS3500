@@ -1,0 +1,46 @@
+{
+  "basis": "Independent SI calculations and source-backed numerical comparisons; not authority criteria.",
+  "benchmarks": [
+    {
+      "case": "free orifice Cd=0.62, A=0.01 m2, H=1 m, g=9.80665 m/s2",
+      "method": "Q=Cd*A*sqrt(2*g*H)",
+      "expected_capacity_lps": 27.47,
+      "tolerance_lps": 0.03
+    },
+    {
+      "case": "rectangular weir C=1.7 m^0.5/s, L=1 m, H=0.25 m",
+      "method": "Q=C*L*H^(3/2)",
+      "expected_capacity_lps": 212.5,
+      "tolerance_lps": 0.001
+    },
+    {
+      "case": "1000 m2, C=1, rainfall=360 mm/h for 100 s, dry start, constant 10 L/s outlet, 10 s Modified Puls step",
+      "inputs": {
+        "stage_storage": [
+          {"stage_m": 0, "storage_m3": 0},
+          {"stage_m": 1, "storage_m3": 100}
+        ],
+        "stage_discharge": [
+          {"stage_m": 0, "discharge_lps": 10},
+          {"stage_m": 1, "discharge_lps": 10}
+        ],
+        "hyetograph": [
+          {"duration_s": 100, "rainfall_intensity_mm_per_hour": 360}
+        ],
+        "catchment_area_m2": 1000,
+        "runoff_coefficient": 1,
+        "loss_rate_mm_per_hour": 0,
+        "outlet": {"type": "weir", "coefficient": 1.7, "length_m": 1},
+        "allowable_discharge_lps": 5,
+        "duration_step_s": 10
+      },
+      "independent_method": "Rainfall input is 1000*360/3600*100/1000=10 m3. Dry-start first-step Modified Puls uses average outflow (0+10)/2 L/s, discharging 0.05 m3; the following nine 10 s intervals each discharge 0.10 m3. Thus peak storage is 10-0.95=9.05 m3 and mass balance closes.",
+      "expected_rainfall_volume_m3": 10,
+      "expected_discharged_volume_m3": 0.95,
+      "expected_peak_storage_m3": 9.05,
+      "tolerance_m3": 1e-8,
+      "expected_mass_balance_error_m3": 0,
+      "tolerance_mass_balance_m3": 1e-8
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "calculation": "stormwater.as3500.csiro_1973_rainhead",
+  "inputs": {
+    "design_flow_lps": 10,
+    "downpipe_diameter_mm": 150,
+    "box_side_clearance_mm": 150
+  }
+}
