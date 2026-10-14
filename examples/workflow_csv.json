@@ -1,0 +1,7 @@
+{
+  "calculation": "stormwater.as3500.csv_import",
+  "inputs": {
+    "kind": "catchments",
+    "csv_text": "catchment_id,area_m2,runoff_coefficient\nroof,100,1\npaving,50,0.9\n"
+  }
+}

@@ -25,10 +25,32 @@ jobs:
       - name: Install plugin and tests
         run: |
           python -m pip install -U pip
-          python -m pip install -e ".[dev]"
+          python -m pip install -e ".[dev,reports]"
+          python -m pip install "engcalcs @ git+https://github.com/Elandu/EngCalcs.git@3f3dcb260a311521cc56d23d8c94f970ab763c86"
       - name: Validate code
         run: |
           python -m ruff check .
           python -m ruff format --check .
       - name: Numerical and integration tests
-        run: python -m pytest -q
+        run: |
+          python tests/verification_report.py
+          python tests/suite_verification_report.py
+          python -m pytest -q
+      - name: Build distributions
+        run: python -m build
+      - name: Install wheel and run examples outside checkout
+        run: |
+          python -m pip uninstall -y opencalcs-as3500
+          python -m pip install dist/*.whl
+          mkdir -p /tmp/as3500-installed-check
+          cp -r tests examples validation /tmp/as3500-installed-check/
+          cd /tmp/as3500-installed-check
+          python -c "import opencalcs_as3500; assert '/site-packages/' in opencalcs_as3500.__file__; print(opencalcs_as3500.__file__)"
+          python tests/verification_report.py
+          python tests/suite_verification_report.py
+          python -m pytest -q
+      - name: Save verified distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: as3500-python-${{ matrix.python-version }}
+          path: dist/*

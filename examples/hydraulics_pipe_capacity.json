@@ -1,0 +1,10 @@
+{
+  "calculation": "stormwater.as3500.pipe_capacity",
+  "inputs": {
+    "flow_lps": 5,
+    "internal_diameter_mm": 150,
+    "gradient": 0.01,
+    "roughness_k_mm": 0.015,
+    "kinematic_viscosity_m2_s": 1.004e-06
+  }
+}

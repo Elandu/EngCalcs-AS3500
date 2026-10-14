@@ -1,0 +1,15 @@
+{
+  "left_roof_slope_degrees": 20,
+  "right_roof_slope_degrees": 25,
+  "plan_angle_degrees": 90,
+  "bottom_width_m": 0.1,
+  "flow_depth_m": 0.08,
+  "channel_gradient": 0.01,
+  "manning_n": 0.013,
+  "design_rainfall_intensity_mm_per_hour": 100,
+  "contributing_plan_area_m2": 50,
+  "wave_allowance_m": 0.025,
+  "freeboard_m": 0.03,
+  "sheet_width_m": 0.45,
+  "obstruction_width_m": 0.02
+}

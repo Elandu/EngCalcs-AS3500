@@ -1,0 +1,6 @@
+{
+  "crest_length_m": 1.0,
+  "discharge_coefficient": 1.7,
+  "head_m": 0.25,
+  "weir_type": "rectangular_suppressed"
+}

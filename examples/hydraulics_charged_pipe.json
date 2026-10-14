@@ -1,0 +1,11 @@
+{
+  "calculation": "stormwater.as3500.charged_pipe",
+  "inputs": {
+    "length_m": 120.0,
+    "internal_diameter_mm": 200.0,
+    "roughness_k_mm": 0.015,
+    "kinematic_viscosity_m2_s": 0.000001004,
+    "minor_loss_coefficients": [0.5, 1.0],
+    "available_head_m": 4.0
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "review_date": "2026-10-14",
+  "source_material_distributed": false,
+  "sources": [
+    {
+      "reference": "AS/NZS 3500.3:2025",
+      "role": "Current selected Australian stormwater procedures",
+      "sha256": "55a7c882691a5b9973c7a032834fff677e2b69d95b3b982fcaf8446e8356fe17"
+    },
+    {
+      "reference": "AS/NZS 3500.3:2021",
+      "role": "Historical comparison of valley method and absence of the new graph",
+      "sha256": "e852f07aeeb26920fed41198b5c742672232be8a4008b4587b15ffbbea2c8260"
+    },
+    {
+      "reference": "AS/NZS 3500.3:2018",
+      "role": "Historical comparison of valley method and absence of the new graph",
+      "sha256": "4493db92e55f37d0b3b4aedc8a3654be0869e7a460bca707007e8dba03bcec06"
+    },
+    {
+      "reference": "K. G. Martin, Roof Drainage, CSIRO DBR Technical Paper (Second Series) No. 1, 1973",
+      "role": "Historical empirical methods; original Imperial gallons verified",
+      "sha256": "f8d6b36be3643913f865cd394aaca35f837927a1da126a43c78fe86b219d75b8"
+    }
+  ],
+  "valley_figure_issue": {
+    "reference": "2025 Figure 3.6.2",
+    "finding": "Allowable rainfall appears to increase with catchment area for fixed width, contrary to physical capacity monotonicity.",
+    "source_folder_check": "No applicable correction located in the supplied standards folder; 2018 and 2021 sources contain the small-catchment table without this graph.",
+    "implementation": "Automatic selection above 20 m2 is rejected; the verified table and separate hydraulic diagnostics remain available.",
+    "publisher_correction_verified": false
+  },
+  "appendix_h_review": {
+    "figures": [
+      "H.1",
+      "H.3",
+      "H.4",
+      "H.5",
+      "H.6",
+      "H.7",
+      "H.8"
+    ],
+    "method": "Conservative bounded sampled envelopes; explicit Appendix I anchors remain distinct.",
+    "h1": "Upper flow and narrower width; unadjusted depth retained without gradient reduction.",
+    "h3": "Actual named pipe family for water depth; adopted hr and upper ha curve for length.",
+    "h4": "Whole-flow samples restricted inside plotted family extents. Additional 20 mm visual-reading allowance. Independent Q7 review identified raw 100x75 and circular 100 underreads; regression lower bounds are 250 and 235 mm.",
+    "h6_h8": "Adverse flow/width brackets with disclosed allowances; reviewed edge underreads corrected.",
+    "h5": "Sump along-gutter dimension max(400, overflow width + twice offset); transverse dimension equals gutter width.",
+    "h7": "Signed sump datum is 60 mm minus offset when offset exceeds 60 mm.",
+    "precision_limit": "Sparse visual envelopes, not exact digitization; unsupported context requires a sourced designer reading."
+  }
+}

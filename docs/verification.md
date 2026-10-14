@@ -1,12 +1,42 @@
 # Calculation verification
 
-## Method
+## Version 0.3 verification
+
+The extension has 38 registered calculations. Every calculation has a schema-checked executable example and is exercised through the installed host registry and HTTP API. The release evidence is recorded in `validation/release_checks.json`; the commands below reproduce the source checks. CI repeats them on Python 3.12 and 3.13 and installs the wheel outside the checkout.
+
+Local release acceptance on Python 3.12.10 passed **225 source tests and 225 installed-wheel tests, with zero failures, errors or skips**. Both numerical-report generators passed in both environments. Ruff, formatting, compilation, metadata parsing, dependency consistency, wheel/sdist builds and distribution-content audits passed. The three-page sample PDF was also visually reviewed. Remote CI results are recorded separately on the pull request.
+
+```powershell
+python -m ruff check .
+python -m ruff format --check .
+python -m compileall -q src tests
+python tests/verification_report.py
+python tests/suite_verification_report.py
+python -m pytest -q
+python -m build
+```
+
+`validation/benchmarks.json` retains ten independent arithmetic cases. `validation/suite_benchmarks.json` adds thirteen cases with 25 numerical comparisons: explicit fixed-gradient Colebrook substitution; Hagen-Poiseuille series-pipe flow; asymmetric Manning normal depth; constant-volume storage; an analytical linear reservoir under timestep refinement; orifice/weir discharge; valley geometry; roof sheet capacity; historical CSIRO Imperial-unit conversions; grouped roof/wall geometry; and published Appendix I box/rainhead readings. Each comparison records its own units, expected value, tolerance and actual error. The reservoir comparison allows the declared Modified Puls discretization error; chart readings are separate from equation precision.
+
+Domain tests cover missing/nonfinite inputs, chart bounds and context, inclusive table boundaries, correlated wind cases, network conservation and invalid topology, downstream cover, theoretical/catalogue bores, zero-head flow, series pressures, CSV validation, piecewise-constant rainfall volumes, dry storage, bypass/overflow discharge, passive outlets versus explicit flow controls, storage sizing, CLI errors, report hashes and PDF pagination.
+
+The pristine integration host is `Elandu/EngCalcs` revision `3f3dcb260a311521cc56d23d8c94f970ab763c86`, installed from Git into an isolated Python 3.12 environment. Wheel acceptance runs outside the source checkout and verifies that imports resolve to `site-packages`. It does not depend on changes in the user's separate host checkout. Distributions are audited for licensed source material, recovered third-party code and generated previews.
+
+### Source and chart review
+
+The reviewed current standard, two historical editions and the user's scanned Martin (1973) paper are identified by reference and SHA-256 in `validation/source_review.json`. Source documents remain private. Current-standard procedures, historical research and general hydraulic models have distinct provenance.
+
+Appendix H supports published example anchors and conservative bounded graph envelopes. H.1 envelopes retain the larger unadjusted depth, without taking a gradient reduction. H.3 length uses the adopted rainhead depth and the gutter-depth curve. Other chart envelopes select the adverse sampled flow/width and disclose visual-reading allowances. These are deliberately conservative selections, not exact digitization or equations fitted to RGD results. The independent graph-boundary tests prevent the underreads found during review.
+
+Automatic valley selection above 20 m2 remains disabled because the supplied 2025 Figure 3.6.2 has an unresolved physical-monotonicity inconsistency. The 2018 and 2021 editions and the provided standards folder were checked; no applicable correction was located. The small-catchment table and separate hydraulic diagnostics are supported. RGD's unavailable CFD solver is not reproduced.
+
+## Legacy arithmetic method
 
 The source basis was reviewed against AS/NZS 3500.3:2025. Independent arithmetic cases use the clause equations and compare their expected values against package outputs to an absolute tolerance of 1e-9. The independent cases and comparison results are generated in validation/benchmarks.json. The examples for both flat and single-slope roofs, both open-channel shapes, and each pervious-soil adjustment are included.
 
 The standard's published Appendix K pumped-system example is treated as a separate comparison, not as an independent benchmark. It provides a useful external numeric check of the event volume, 30-minute pumping volume, and remaining storage calculation.
 
-## Release checks
+## Historical version 0.2 release checks
 
 For package version 0.2.0, all 26 plugin and OpenCalcs host tests passed with the built wheel installed. The registry test runs all seven example inputs, and the HTTP test runs the roof-flow calculation. All ten independent benchmarks passed with a maximum absolute difference of 0.0. Ruff checks, formatting, compilation, wheel build, and source-distribution build also passed.
 

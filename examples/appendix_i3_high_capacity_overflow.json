@@ -1,0 +1,11 @@
+{
+  "calculation": "stormwater.as3500.box_high_capacity_overflow",
+  "inputs": {
+    "gutter_flows_lps": [8.5, 6.5],
+    "direct_roof_flow_lps": 1,
+    "box_width_mm": 600,
+    "gradient": 0.005,
+    "pipe": {"shape": "circular", "diameter_mm": 150},
+    "free_discharge_gutter_depth_mm": 105
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "design_rainfall_intensity_mm_per_hour": 145,
+  "gradient": 0.002,
+  "effective_gutter_area_mm2": 7300,
+  "manufacturer_ratings": [
+    {"effective_gutter_area_mm2":7300,"rainfall_intensity_mm_per_hour":145,"gradient":0.002,"maximum_catchment_area_per_downpipe_m2":51,"source":"Illustrative manufacturer rating transcribed from a verified rating chart; replace with project product data."}
+  ],
+  "downpipe_catchments_m2": [44,44,44,43]
+}

@@ -1,0 +1,7 @@
+{
+  "basis": "Independent geometry and Manning-equation checks; not CFD or an AS/NZS 3500.3 valley chart validation.",
+  "benchmarks": [
+    {"case": "symmetric 20deg roof slopes meeting at 90deg plan angle", "expected_left_side_slope_H_to_V": 3.88551983, "expected_right_side_slope_H_to_V": 3.88551983, "tolerance": 0.000001},
+    {"case": "rectangular sheet b=1m y=.01m S=.01 n=.02 Manning", "expected_capacity_lps": 2.29035722, "tolerance_lps": 0.000001}
+  ]
+}

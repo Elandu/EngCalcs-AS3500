@@ -1,0 +1,16 @@
+{
+  "calculation": "stormwater.as3500.rainfall_selection",
+  "inputs": {
+    "location": "Appendix I example",
+    "purpose": "box_gutter",
+    "source": "AS/NZS 3500.3:2025 Appendix I worked example; not a current location IFD lookup",
+    "records": [
+      {
+        "location": "Appendix I example",
+        "aep_percent": 1,
+        "duration_minutes": 5,
+        "depth_mm": 14.9
+      }
+    ]
+  }
+}

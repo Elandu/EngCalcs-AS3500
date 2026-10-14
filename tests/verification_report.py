@@ -188,3 +188,4 @@ if __name__ == "__main__":
     path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     status = "PASS" if report["passed"] else "FAIL"
     print(f"{status}: {len(report['cases'])} independent calculations -> {path}")
+    raise SystemExit(0 if report["passed"] else 1)

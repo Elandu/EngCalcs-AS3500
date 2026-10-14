@@ -28,7 +28,7 @@ from opencalcs_as3500.schemas import (
     ROOF_FLOW_INPUT_SCHEMA,
     SAG_PIT_INPUT_SCHEMA,
 )
-from opencalcs_as3500.standards import STANDARD, StandardReference
+from opencalcs_as3500.standards import STANDARD, StandardReference, reference_for
 
 
 @dataclass(frozen=True)
@@ -39,8 +39,11 @@ class Calculation:
     input_schema: dict[str, Any]
     runner: Callable[[Mapping[str, Any]], dict[str, Any]]
     version: str = "1"
-    standard: StandardReference = STANDARD
+    standard: StandardReference | None = STANDARD
     output_schema: dict[str, Any] = field(default_factory=lambda: deepcopy(OUTPUT_SCHEMA))
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "standard", reference_for(self.id))
 
     def run(self, inputs: Mapping[str, Any]) -> dict[str, Any]:
         return self.runner(inputs)
@@ -54,14 +57,21 @@ class Calculation:
             "category": "drainage-design",
             "jurisdiction": "AU",
             "version": self.version,
-            "standard": self.standard.descriptor(),
+            "standard": self.standard.descriptor() if self.standard else None,
+            "method_family": (
+                "general_engineering"
+                if self.standard is None
+                else "historical_research"
+                if self.standard.edition == "1973"
+                else "selected_standard_method"
+            ),
             "input_schema": deepcopy(self.input_schema),
             "output_schema": deepcopy(self.output_schema),
         }
 
 
 def _calculations() -> tuple[Calculation, ...]:
-    return (
+    base = (
         Calculation(
             "stormwater.as3500.roof_catchment",
             "Roof catchment area",
@@ -119,6 +129,30 @@ def _calculations() -> tuple[Calculation, ...]:
             run_pumped_storage,
         ),
     )
+    from opencalcs_as3500 import (
+        box_gutters,
+        hydraulics,
+        reporting,
+        roof_hydraulics,
+        roof_systems,
+        storage_routing,
+        workflows,
+    )
+
+    extended = tuple(
+        Calculation(**spec)
+        for module in (
+            roof_systems,
+            hydraulics,
+            storage_routing,
+            roof_hydraulics,
+            box_gutters,
+            workflows,
+            reporting,
+        )
+        for spec in module.CALCULATIONS
+    )
+    return base + extended
 
 
 @dataclass(frozen=True)
