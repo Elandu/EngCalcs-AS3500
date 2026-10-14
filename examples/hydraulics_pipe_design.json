@@ -1,0 +1,12 @@
+{
+  "calculation": "stormwater.as3500.pipe_design",
+  "inputs": {
+    "flow_lps": 80.0,
+    "gradient": 0.01,
+    "roughness_k_mm": 0.015,
+    "kinematic_viscosity_m2_s": 0.000001004,
+    "internal_diameters_mm": [100, 150, 225, 300, 375, 450],
+    "max_velocity_m_s": 2.0,
+    "outlet_recommended_velocity_m_s": 1.5
+  }
+}

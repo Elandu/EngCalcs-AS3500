@@ -1,0 +1,6 @@
+{
+  "design_flow_lps": 15,
+  "box_width_mm": 450,
+  "gradient": 0.005,
+  "manning_n": 0.013
+}

@@ -1,0 +1,20 @@
+{
+  "stage_storage": [
+    {"stage_m": 0.0, "storage_m3": 0.0},
+    {"stage_m": 0.5, "storage_m3": 25.0},
+    {"stage_m": 1.0, "storage_m3": 100.0}
+  ],
+  "hyetograph": [
+    {"duration_s": 600, "rainfall_intensity_mm_per_hour": 72.0},
+    {"duration_s": 600, "rainfall_intensity_mm_per_hour": 36.0}
+  ],
+  "catchment_area_m2": 1000,
+  "runoff_coefficient": 0.9,
+  "loss_rate_mm_per_hour": 0.0,
+  "outlet": {"type": "orifice", "coefficient": 0.62, "area_m2": 0.005, "crest_stage_m": 0.0},
+  "allowable_discharge_lps": 5.0,
+  "flow_control_limit_lps": 5.0,
+  "bypass_fraction": 0.0,
+  "freeboard_m": 0.1,
+  "duration_step_s": 60
+}

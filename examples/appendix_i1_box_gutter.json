@@ -1,0 +1,8 @@
+{
+  "calculation": "stormwater.as3500.box_gutter_design",
+  "inputs": {
+    "design_flow_lps": 15,
+    "box_width_mm": 450,
+    "gradient": 0.005
+  }
+}

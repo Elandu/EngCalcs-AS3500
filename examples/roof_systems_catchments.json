@@ -1,0 +1,7 @@
+{
+  "catchments": [
+    {"catchment_id":"north_gutter","geometry":"single_slope_freely_exposed","plan_area_m2":100,"roof_slope_degrees":30},
+    {"catchment_id":"north_gutter","geometry":"vertical_wall_flat_roof","plan_area_m2":20,"vertical_area_m2":40},
+    {"catchment_id":"south_gutter","geometry":"adjacent_sloping_roofs","plan_area_1_m2":40,"plan_area_2_m2":35,"vertical_area_1_m2":18,"vertical_area_2_m2":30}
+  ]
+}

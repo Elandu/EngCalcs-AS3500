@@ -1,0 +1,9 @@
+{
+  "calculation": "stormwater.as3500.csiro_1973_box_gutter",
+  "inputs": {
+    "plan_catchment_area_m2": 303,
+    "rainfall_intensity_mm_per_hour": 180,
+    "water_width_mm": 450,
+    "sloping_area_factor": 1.0
+  }
+}

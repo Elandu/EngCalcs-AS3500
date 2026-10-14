@@ -204,8 +204,21 @@ def test_plugin_descriptor_has_stable_ids_and_scoped_standard():
     assert plugin.id == "stormwater.as3500"
     assert plugin.source.endswith("/EngCalcs-AS3500")
     assert plugin.calculations[0].descriptor()["jurisdiction"] == "AU"
-    assert {item.standard.edition for item in plugin.calculations} == {"2025"}
-    assert len({item.id for item in plugin.calculations}) == 7
+    assert {item.standard.edition for item in plugin.calculations if item.standard} == {
+        "2025",
+        "1973",
+    }
+    ids = [item.id for item in plugin.calculations]
+    assert len(ids) == len(set(ids))
+    assert {
+        "stormwater.as3500.roof_catchment",
+        "stormwater.as3500.roof_flow",
+        "stormwater.as3500.pervious_runoff_coefficient",
+        "stormwater.as3500.design_flow",
+        "stormwater.as3500.open_channel_capacity",
+        "stormwater.as3500.sag_pit_capacity",
+        "stormwater.as3500.pumped_storage",
+    } <= set(ids)
 
 
 def test_roof_area_link_has_exact_unit_compatible_descriptor() -> None:

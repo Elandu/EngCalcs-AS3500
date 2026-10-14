@@ -1,0 +1,14 @@
+{
+  "upper_plan_area_m2": 80,
+  "upper_roof_slope_degrees": 20,
+  "lower_plan_area_m2": 120,
+  "lower_roof_slope_degrees": 15,
+  "design_rainfall_intensity_mm_per_hour": 180,
+  "lower_roof_material": "corrugated_metal",
+  "discharge_method": "spreader",
+  "treated_width_left_mm": 1800,
+  "treated_width_right_mm": 1800,
+  "side_laps_sealed_full_length": true,
+  "lower_gutter_capacity_lps": 14,
+  "lower_downpipe_capacity_lps": 14
+}

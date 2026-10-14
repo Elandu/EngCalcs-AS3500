@@ -1,0 +1,39 @@
+{
+  "calculation": "stormwater.as3500.calculation_pack",
+  "inputs": {
+    "title": "Example drainage calculation pack",
+    "company": "Example engineering practice",
+    "job_number": "EXAMPLE-3500",
+    "project_address": "Demonstration inputs only",
+    "prepared_by": "Design engineer",
+    "notes": "The design rainfall is a worked input. Replace it with project IFD and verify project detailing.",
+    "runs": [
+      {
+        "calculation": "stormwater.as3500.roof_flow",
+        "inputs": {
+          "catchment_area_m2": 1000,
+          "design_rainfall_intensity_mm_per_hour": 180
+        }
+      },
+      {
+        "calculation": "stormwater.as3500.pipe_design",
+        "inputs": {
+          "flow_lps": 80.0,
+          "gradient": 0.01,
+          "roughness_k_mm": 0.015,
+          "kinematic_viscosity_m2_s": 1.004e-06,
+          "internal_diameters_mm": [
+            100,
+            150,
+            225,
+            300,
+            375,
+            450
+          ],
+          "max_velocity_m_s": 2.0,
+          "outlet_recommended_velocity_m_s": 1.5
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "calculation": "stormwater.as3500.rainhead_design",
+  "inputs": {
+    "design_flow_lps": 15,
+    "box_width_mm": 450,
+    "gradient": 0.005,
+    "pipe": {"shape": "rectangular", "width_mm": 150, "height_mm": 100},
+    "gutter_depth_at_1_in_200_mm": 140,
+    "selected_depth_mm": 250,
+    "selected_length_mm": 200
+  }
+}

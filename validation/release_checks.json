@@ -1,0 +1,69 @@
+{
+  "package": "opencalcs-as3500",
+  "version": "0.3.0",
+  "verification_date": "2026-10-14",
+  "registered_calculations": 38,
+  "platform": "Windows",
+  "python": "3.12.10",
+  "integration_host": {
+    "repository": "https://github.com/Elandu/EngCalcs",
+    "revision": "3f3dcb260a311521cc56d23d8c94f970ab763c86",
+    "installation": "Pristine pinned Git installation; user host checkout not used."
+  },
+  "source_tests": {
+    "tests": 225,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 50.385
+  },
+  "installed_wheel_tests": {
+    "tests": 225,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "duration_seconds": 8.416
+  },
+  "independent_numerical_reports": {
+    "legacy_cases": 10,
+    "added_cases": 13,
+    "added_comparisons": 25,
+    "all_passed": true,
+    "files": [
+      "benchmarks.json",
+      "suite_benchmarks.json"
+    ]
+  },
+  "checks": {
+    "ruff": "passed",
+    "ruff_format": "40 files passed",
+    "compileall": "passed",
+    "json_toml": "passed",
+    "ci_yaml": "passed",
+    "markdown_local_links": "passed",
+    "all_catalog_examples": "schema and execution passed",
+    "host_registry": "all 38 passed",
+    "host_http_api": "all 38 passed",
+    "cli_module_and_executable": "passed",
+    "html_and_pdf": "passed; three-page example visually reviewed",
+    "pip_check": "no broken requirements",
+    "wheel_and_sdist_build": "passed",
+    "distribution_audit": "no licensed source, decoded RGD implementation, previews or environments"
+  },
+  "installed_acceptance": {
+    "outside_checkout": true,
+    "source_tree_copied": false,
+    "plugin_import_from_site_packages": true,
+    "host_import_from_site_packages": true,
+    "wheel_sha256": "abfa02c115c65c158ba3132baf82531e8044a1741e3f111dcdaa63eb7cbeef58"
+  },
+  "resolved_tooling_retry": "Initial no-isolation build in the source test environment lacked hatchling. Build passed in the fresh release environment containing the declared backend.",
+  "source_review": "source_review.json",
+  "remaining_method_limits": [
+    "No publisher-verified correction found for 2025 valley Figure 3.6.2; automatic selection above 20 m2 remains guarded.",
+    "Appendix H automatic readings are bounded conservative envelopes and exact example anchors, not precision digitization.",
+    "No RGD CFD or unavailable PHP solver equivalence is claimed.",
+    "Supplied rainfall, product, loss, authority and project data remain design inputs; no whole-standard or project compliance claim."
+  ],
+  "remote_ci": "Configured for Python 3.12 and 3.13; execution is recorded by the pull request checks."
+}

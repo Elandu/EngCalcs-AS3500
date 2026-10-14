@@ -1,0 +1,10 @@
+{
+  "calculation": "stormwater.as3500.box_side_overflow",
+  "inputs": {
+    "gutter_flows_lps": [8, 8],
+    "box_width_mm": 600,
+    "gradient": 0.005,
+    "pipe": {"shape": "circular", "diameter_mm": 150},
+    "overflow_width_mm": 300
+  }
+}

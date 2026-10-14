@@ -1,0 +1,14 @@
+{
+  "calculation": "stormwater.as3500.pipe_network",
+  "inputs": {
+    "nodes": [
+      {"id": "pit_a", "inflow_lps": 10.0, "invert_level_m": 20.0},
+      {"id": "pit_b", "invert_level_m": 19.9},
+      {"id": "outlet", "invert_level_m": 19.8}
+    ],
+    "pipes": [
+      {"id": "pipe_ab", "from": "pit_a", "to": "pit_b", "length_m": 10.0, "internal_diameter_mm": 150.0, "roughness_k_mm": 0.015, "kinematic_viscosity_m2_s": 0.000001004, "surface_level_m": 20.55, "cover_m": 0.4, "required_cover_m": 0.3},
+      {"id": "pipe_bout", "from": "pit_b", "to": "outlet", "length_m": 10.0, "internal_diameter_mm": 150.0, "roughness_k_mm": 0.015, "kinematic_viscosity_m2_s": 0.000001004, "surface_level_m": 20.45, "cover_m": 0.4, "required_cover_m": 0.3}
+    ]
+  }
+}

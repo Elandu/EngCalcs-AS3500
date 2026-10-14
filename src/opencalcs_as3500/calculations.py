@@ -19,7 +19,7 @@ from opencalcs_as3500.schemas import (
 )
 from opencalcs_as3500.standards import (
     AUSTRALIAN_ROOFED_AREA_RUNOFF_COEFFICIENT,
-    STANDARD,
+    reference_for,
 )
 
 
@@ -49,9 +49,12 @@ def _validated(data: Mapping[str, Any], schema: dict[str, Any]) -> dict[str, Any
 
 def _result(calculation: str, clauses: tuple[str, ...], results: dict[str, Any]) -> dict[str, Any]:
     _check_finite(results, "results")
+    reference = reference_for(calculation)
     return {
         "calculation": calculation,
-        "standard": f"{STANDARD.code}:{STANDARD.edition}",
+        "standard": (
+            f"{reference.code}:{reference.edition}" if reference else "General engineering method"
+        ),
         "clauses": list(clauses),
         "results": results,
         "full_standard_compliance": False,

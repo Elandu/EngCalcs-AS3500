@@ -1,0 +1,12 @@
+{
+  "calculation": "stormwater.as3500.pipe_network_csv",
+  "inputs": {
+    "pipe_csv": "pipe_id,upstream_node,downstream_node,length_m,internal_diameter_mm,upstream_invert_m,downstream_invert_m\np1,a,j,10,150,2,1.9\np2,b,j,15,150,2,1.9\np3,j,out,20,225,1.9,1.7\n",
+    "node_inflows_lps": {
+      "a": 3,
+      "b": 2
+    },
+    "roughness_k_mm": 0.015,
+    "kinematic_viscosity_m2_s": 1.004e-06
+  }
+}

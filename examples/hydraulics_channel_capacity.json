@@ -1,0 +1,13 @@
+{
+  "calculation": "stormwater.as3500.channel_capacity",
+  "inputs": {
+    "shape": "trapezoidal",
+    "bottom_width_m": 0.45,
+    "left_side_slope_horizontal_to_vertical": 1.0,
+    "right_side_slope_horizontal_to_vertical": 1.5,
+    "flow_depth_m": 0.25,
+    "channel_gradient": 0.01,
+    "manning_n": 0.015,
+    "design_flow_lps": 80.0
+  }
+}

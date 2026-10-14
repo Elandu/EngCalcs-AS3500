@@ -1,0 +1,8 @@
+{
+  "catchment_area_m2":175,
+  "design_rainfall_intensity_mm_per_hour":200,
+  "eaves_gutter_length_m":12,
+  "measure":"front_bead",
+  "front_bead_height_below_fascia_mm":10,
+  "gradient":0.002
+}
